@@ -40,3 +40,7 @@ coverage/
  
 scratch/
 env
+
+# Python
+.venv/
+__pycache__/

@@ -1,0 +1,24 @@
+services:
+  mongo:
+    image: mongo:7
+    container_name: g2h-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  warehouse:
+    image: postgres:16
+    container_name: g2h-warehouse
+    environment:
+      POSTGRES_USER: analytics
+      POSTGRES_PASSWORD: analytics
+      POSTGRES_DB: warehouse
+    ports:
+      - "5433:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+volumes:
+  mongo_data:
+  pg_data:

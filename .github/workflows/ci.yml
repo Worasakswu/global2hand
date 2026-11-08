@@ -3,37 +3,27 @@ name: Global2Hand CI
 on:
   push:
     branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
-  test-our-code:
-    runs-on: ubuntu-latest # นี่ไงครับ! เราสั่งให้ GitHub เปิด Linux ให้เราแล้ว ไม่ต้องง้อ Cygwin
-
+  test:
+    runs-on: ubuntu-latest
     steps:
-      - name: ดึงโค้ดจาก GitHub มาที่เครื่องจำลอง
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: ติดตั้ง Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
 
-      - name: ติดตั้ง Library ทั้งหมด
-        run: npm install
+      - name: Install dependencies
+        run: npm ci
 
-      - name: ทดสอบรันระบบ (ถ้าพังจะแจ้งเตือน)
-        run: npm test
-        env: # <--- เพิ่มบรรทัดนี้ลงไป
-          GOOGLE_CLIENT_ID: 'dummy_client_id_for_test'
-          GOOGLE_CLIENT_SECRET: 'dummy_secret_for_test'
-          # ถ้ามีการใช้ Environment ตัวอื่นตอน Test เช่น Database ให้เพิ่มเข้าไปด้วยครับ
-          # ... โค้ดเดิมด้านบน ...
-      - name: ทดสอบรันระบบ (ถ้าพังจะแจ้งเตือน)
+      - name: Run tests
         run: npm test
         env:
           GOOGLE_CLIENT_ID: 'dummy_client_id_for_test'
           GOOGLE_CLIENT_SECRET: 'dummy_secret_for_test'
-
-      # ----- เพิ่มส่วนนี้เข้าไปต่อท้ายสุด -----
-      - name: 🚀 สั่ง Render ให้ Deploy เว็บไซต์ (CD)
-        if: success() # จะทำงานเฉพาะเมื่อขั้นตอนข้างบนผ่านสีเขียวทั้งหมดเท่านั้น
-        run: curl "${{ secrets.RENDER_DEPLOY_HOOK }}"

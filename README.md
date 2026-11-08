@@ -1,5 +1,9 @@
 #  Global2Hand
 
+> Originally built as a 3-person team project at Srinakharinwirot University (2026).
+> This fork is maintained by Worasak Sankla and extended with a data analytics pipeline.
+> My contributions: backend, database, CI/CD pipeline, Figma design system.
+
 # สมาชิกกลุ่ม 
 - นายกฤตตฤณ บุญสู่ 67102010157
 - นายณัฐพล สวนใหญ่  67102010162

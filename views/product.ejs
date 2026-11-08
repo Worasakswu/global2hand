@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <%- include('partials/common-head') %>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global2Hand - Product Detail</title>
+    <link rel="stylesheet" href="/css/product.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <%- include('partials/header') %>
+
+        <main class="container section-spacing">
+            <nav class="breadcrumb">Home / <%= product.category ? product.category.name : 'Uncategorized' %> / <span>
+                        <%= product.name %>
+                    </span></nav>
+
+            <section class="product-detail-layout">
+                <div class="product-gallery">
+                    <div class="main-image"
+                        style="background: #f5f5f5; border-radius: 8px; padding: 20px; display: flex; align-items: center; justify-content: center; min-height: 400px;">
+                        <% const mainImg=(product.images && product.images.length> 0) ? product.images[0] :
+                            (product.image || 'https://placehold.co/400x300?text=No+Photo'); %>
+                            <img src="<%= mainImg %>" id="displayedImage" alt="<%= product.name %>"
+                                onerror="this.onerror=null;this.src='https://placehold.co/400x300?text=No+Photo';"
+                                style="max-width: 100%; max-height: 400px; object-fit: contain;">
+                    </div>
+                    <% if (product.images && product.images.length> 1) { %>
+                        <div class="thumbnail-gallery"
+                            style="display: flex; gap: 10px; margin-top: 15px; overflow-x: auto; padding-bottom: 5px;">
+                            <% product.images.forEach(img=> { %>
+                                <img src="<%= img %>" class="thumb"
+                                    onclick="document.getElementById('displayedImage').src=this.src"
+                                    style="width: 70px; height: 70px; object-fit: cover; cursor: pointer; border: 2px solid #eee; border-radius: 4px; transition: 0.3s;"
+                                    onmouseover="this.style.borderColor='#db4444'"
+                                    onmouseout="this.style.borderColor='#eee'">
+                                <% }) %>
+                        </div>
+                        <% } %>
+                </div>
+
+                <div class="product-info-column">
+                    <h1 class="product-name">
+                        <%= product.name %>
+                    </h1>
+                    <p class="product-price">฿<%= product.price.toLocaleString() %>
+                    </p>
+                    <% if(product.tags && product.tags.length> 0) { %>
+                        <div style="margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap;">
+                            <% product.tags.forEach(tag=> { %>
+                                <span
+                                    style="background: #fdf2f2; border: 1px solid #fabdbd; color: #db4444; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 500;">
+                                    <%= tag %>
+                                </span>
+                                <% }) %>
+                        </div>
+                        <% } %>
+
+                            <p class="product-desc" style="margin-top: 15px; white-space: pre-line;">
+                                <%= product.description %>
+                            </p>
+
+                            <div
+                                style="margin-top: 15px; font-size: 13px; color: #555; display: flex; flex-direction: column; gap: 5px;">
+                                <p>Location: <strong>
+                                        <%= product.province || (product.seller ? product.seller.province : 'N/A' ) %>
+                                    </strong></p>
+                                <p>Posted on: <strong>
+                                        <%= product.createdAt ? new Date(product.createdAt).toLocaleDateString('en-US',
+                                            { year: 'numeric' , month: 'long' , day: 'numeric' }) : 'N/A' %>
+                                    </strong></p>
+                            </div>
+
+                            <div class="divider-small"></div>
+
+                            <div class="seller-card">
+                                <div class="seller-header">
+                                    <div class="seller-avatar">👤</div>
+                                    <div class="seller-name">
+                                        <%= product.seller ? product.seller.name : 'Unknown Seller' %>
+                                            <% if(product.seller && product.seller.createdAt) { %>
+                                                <span
+                                                    style="display: block; font-size: 12px; color: #888; font-weight: 400; margin-top: 4px;">
+                                                    Joined: <%= new
+                                                        Date(product.seller.createdAt).toLocaleDateString('en-US', {
+                                                        year: 'numeric' , month: 'long' , day: 'numeric' }) %>
+                                                </span>
+                                                <% } %>
+                                    </div>
+                                </div>
+                                <button class="btn-talk" style="margin-top: 15px; width: 100%; transition: 0.3s;"
+                                    onclick="document.getElementById('contactModal').style.display = 'flex';">
+                                    Look at the seller's number
+                                </button>
+                            </div>
+                </div>
+            </section>
+
+            <!-- Related Items section removed to show only real products -->
+            <!-- Contact Seller Modal -->
+        <div id="contactModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9999; align-items: center; justify-content: center;">
+            <div style="background: white; padding: 24px; border-radius: 8px; max-width: 450px; width: 90%; box-shadow: 0 4px 15px rgba(0,0,0,0.2); animation: popIn 0.3s ease-out forwards; position: relative;">
+                
+                <!-- Header -->
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <h3 style="margin: 0; color: #333; font-size: 18px; font-weight: 700;">Contact seller</h3>
+                    <span onclick="document.getElementById('contactModal').style.display = 'none';" 
+                          style="position: absolute; right: 20px; top: 20px; font-size: 20px; color: #999; cursor: pointer; line-height: 1;">✕</span>
+                </div>
+                
+                <!-- Product Info -->
+                <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 24px;">
+                    <div style="background: #f5f5f5; padding: 10px; border-radius: 8px; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">
+                        <% const mpImg = (product.images && product.images.length > 0) ? product.images[0] : (product.image || 'https://placehold.co/400x300?text=No+Photo'); %>
+                        <img src="<%= mpImg %>" alt="<%= product.name %>" onerror="this.onerror=null;this.src='https://placehold.co/400x300?text=No+Photo';" style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 4px;">
+                    </div>
+                    <div>
+                        <h4 style="margin: 0 0 8px 0; color: #333; font-size: 16px; font-weight: 500;"><%= product.name %></h4>
+                        <span style="color: #db4444; font-weight: 700; font-size: 18px;">฿ <%= product.price.toLocaleString() %></span>
+                    </div>
+                </div>
+                
+                <!-- Phone Number Badge -->
+                <div style="background: #7fb3ff; color: white; text-align: center; padding: 14px; border-radius: 6px; font-size: 16px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                    <img src="/image/telephone.png" alt="Phone" style="width: 20px; height: 20px; object-fit: contain;">
+                    <%= product.phone ? product.phone : '087-777-7777' %>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+        <%- include('partials/footer') %>
+
+</body>
+
+</html>

@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <%- include('partials/common-head') %>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Global2Hand - Selling</title>
+    <link rel="stylesheet" href="/css/selling.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap"
+      rel="stylesheet" />
+</head>
+
+<body>
+  <%- include('partials/header') %>
+
+    <main class="container section-spacing">
+      <nav class="breadcrumb">Home / <span>Selling</span></nav>
+
+      <form action="/items/add" method="POST" enctype="multipart/form-data">
+        <div class="selling-layout">
+          <div class="upload-section">
+            <div class="side-placeholders">
+              <!-- Hidden Inputs outside to prevent click bubbling loops -->
+              <input type="file" id="sideInput1" name="image" hidden onchange="previewSideImage(this, 1)"
+                accept="image/jpeg, image/png, image/jpg" />
+              <input type="file" id="sideInput2" name="image" hidden onchange="previewSideImage(this, 2)"
+                accept="image/jpeg, image/png, image/jpg" />
+              <input type="file" id="sideInput3" name="image" hidden onchange="previewSideImage(this, 3)"
+                accept="image/jpeg, image/png, image/jpg" />
+              <input type="file" id="sideInput4" name="image" hidden onchange="previewSideImage(this, 4)"
+                accept="image/jpeg, image/png, image/jpg" />
+
+              <label class="img-box" for="sideInput1">
+                <span id="sideIcon1">+</span>
+                <img id="sidePreview1" src=""
+                  style="display: none; width: 100%; height: 100%; object-fit: cover; border-radius: 4px;" />
+              </label>
+
+              <label class="img-box" for="sideInput2">
+                <span id="sideIcon2">+</span>
+                <img id="sidePreview2" src=""
+                  style="display: none; width: 100%; height: 100%; object-fit: cover; border-radius: 4px;" />
+              </label>
+
+              <label class="img-box" for="sideInput3">
+                <span id="sideIcon3">+</span>
+                <img id="sidePreview3" src=""
+                  style="display: none; width: 100%; height: 100%; object-fit: cover; border-radius: 4px;" />
+              </label>
+
+              <label class="img-box" for="sideInput4">
+                <span id="sideIcon4">+</span>
+                <img id="sidePreview4" src=""
+                  style="display: none; width: 100%; height: 100%; object-fit: cover; border-radius: 4px;" />
+              </label>
+            </div>
+            <div class="main-upload-card">
+              <input type="file" id="fileInput" name="image" hidden accept="image/jpeg, image/png, image/jpg" />
+
+              <label class="upload-area" id="uploadBtn" for="fileInput"
+                style="cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                <div class="cloud-icon" id="previewContainer">
+                  <span id="placeholderIcon">☁️</span>
+                  <img id="imagePreview" src="" style="
+                    display: none;
+                    max-width: 100%;
+                    max-height: 100%;
+                    object-fit: contain;
+                  " />
+                </div>
+                <p id="uploadText">Browse Files to upload</p>
+              </label>
+
+              <div class="file-status-bar">
+                <span id="fileNameDisplay">📄 No selected File -</span>
+                <button class="delete-file" id="deleteBtn" type="button">🗑️</button>
+              </div>
+
+              <!-- New row for Province and Category -->
+              <div class="location-cat-row" style="display: flex; gap: 15px; margin-top: 20px;">
+                <div style="flex: 1;">
+                  <label class="sell-label">Province</label>
+                  <select name="province" class="sell-select themed-select" required>
+                    <option value="">-- Select Province --</option>
+                    <option value="Bangkok">Bangkok</option>
+                    <option value="Amnat Charoen">Amnat Charoen</option>
+                    <option value="Ang Thong">Ang Thong</option>
+                    <option value="Bueng Kan">Bueng Kan</option>
+                    <option value="Buriram">Buriram</option>
+                    <option value="Chachoengsao">Chachoengsao</option>
+                    <option value="Chai Nat">Chai Nat</option>
+                    <option value="Chaiyaphum">Chaiyaphum</option>
+                    <option value="Chanthaburi">Chanthaburi</option>
+                    <option value="Chiang Mai">Chiang Mai</option>
+                    <option value="Chiang Rai">Chiang Rai</option>
+                    <option value="Chonburi">Chonburi</option>
+                    <option value="Chumphon">Chumphon</option>
+                    <option value="Kalasin">Kalasin</option>
+                    <option value="Kamphaeng Phet">Kamphaeng Phet</option>
+                    <option value="Kanchanaburi">Kanchanaburi</option>
+                    <option value="Khon Kaen">Khon Kaen</option>
+                    <option value="Krabi">Krabi</option>
+                    <option value="Lampang">Lampang</option>
+                    <option value="Lamphun">Lamphun</option>
+                    <option value="Loei">Loei</option>
+                    <option value="Lopburi">Lopburi</option>
+                    <option value="Mae Hong Son">Mae Hong Son</option>
+                    <option value="Maha Sarakham">Maha Sarakham</option>
+                    <option value="Mukdahan">Mukdahan</option>
+                    <option value="Nakhon Nayok">Nakhon Nayok</option>
+                    <option value="Nakhon Pathom">Nakhon Pathom</option>
+                    <option value="Nakhon Phanom">Nakhon Phanom</option>
+                    <option value="Nakhon Ratchasima">Nakhon Ratchasima</option>
+                    <option value="Nakhon Sawan">Nakhon Sawan</option>
+                    <option value="Nakhon Si Thammarat">Nakhon Si Thammarat</option>
+                    <option value="Nan">Nan</option>
+                    <option value="Narathiwat">Narathiwat</option>
+                    <option value="Nong Bua Lamphu">Nong Bua Lamphu</option>
+                    <option value="Nong Khai">Nong Khai</option>
+                    <option value="Nonthaburi">Nonthaburi</option>
+                    <option value="Pathum Thani">Pathum Thani</option>
+                    <option value="Pattani">Pattani</option>
+                    <option value="Phang Nga">Phang Nga</option>
+                    <option value="Phatthalung">Phatthalung</option>
+                    <option value="Phayao">Phayao</option>
+                    <option value="Phetchabun">Phetchabun</option>
+                    <option value="Phetchaburi">Phetchaburi</option>
+                    <option value="Phichit">Phichit</option>
+                    <option value="Phitsanulok">Phitsanulok</option>
+                    <option value="Phra Nakhon Si Ayutthaya">Phra Nakhon Si Ayutthaya</option>
+                    <option value="Phrae">Phrae</option>
+                    <option value="Prachinburi">Prachinburi</option>
+                    <option value="Prachuap Khiri Khan">Prachuap Khiri Khan</option>
+                    <option value="Ranong">Ranong</option>
+                    <option value="Ratchaburi">Ratchaburi</option>
+                    <option value="Rayong">Rayong</option>
+                    <option value="Roi Et">Roi Et</option>
+                    <option value="Sa Kaeo">Sa Kaeo</option>
+                    <option value="Sakon Nakhon">Sakon Nakhon</option>
+                    <option value="Samut Prakan">Samut Prakan</option>
+                    <option value="Samut Sakhon">Samut Sakhon</option>
+                    <option value="Samut Songkhram">Samut Songkhram</option>
+                    <option value="Saraburi">Saraburi</option>
+                    <option value="Satun">Satun</option>
+                    <option value="Sing Buri">Sing Buri</option>
+                    <option value="Sisaket">Sisaket</option>
+                    <option value="Songkhla">Songkhla</option>
+                    <option value="Sukhothai">Sukhothai</option>
+                    <option value="Suphan Buri">Suphan Buri</option>
+                    <option value="Surat Thani">Surat Thani</option>
+                    <option value="Surin">Surin</option>
+                    <option value="Tak">Tak</option>
+                    <option value="Trang">Trang</option>
+                    <option value="Trat">Trat</option>
+                    <option value="Ubon Ratchathani">Ubon Ratchathani</option>
+                    <option value="Udon Thani">Udon Thani</option>
+                    <option value="Uthai Thani">Uthai Thani</option>
+                    <option value="Uttaradit">Uttaradit</option>
+                    <option value="Yala">Yala</option>
+                    <option value="Yasothon">Yasothon</option>
+                  </select>
+                </div>
+                <div style="flex: 1;">
+                  <label class="sell-label">Category <span style="color: #db4444;">*</span></label>
+                  <select name="category" class="sell-select themed-select" required>
+                    <option value="">-- Select Category --</option>
+                    <% if (typeof categories !=='undefined' && categories.length> 0) { %>
+                      <% categories.forEach(cat=> { %>
+                        <option value="<%= cat._id %>">
+                          <%= cat.name %>
+                        </option>
+                        <% }) %>
+                          <% } %>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="details-section">
+            <div class="input-group-sell">
+              <label class="sell-label" style="margin-bottom: -20px;">Product Name <span
+                  style="color: #db4444;">*</span></label>
+              <input type="text" name="name" placeholder="Product Name" class="sell-input" required />
+              <label class="sell-label" style="margin-bottom: -20px;">Price (THB) <span
+                  style="color: #db4444;">*</span></label>
+              <input type="number" name="price" placeholder="Price (THB)" class="sell-input" required min="0"
+                step="50" />
+              <label class="sell-label" style="margin-bottom: -20px;">Description <span
+                  style="color: #db4444;">*</span></label>
+              <textarea name="description" placeholder="Product Description" class="sell-input" required rows="6"
+                style="height: auto; padding-top: 15px; resize: vertical; margin-bottom: 20px;"></textarea>
+
+              <div class="tags-selection-container" style="margin-bottom: 20px;">
+                <label
+                  style="display: block; margin-bottom: 8px; font-weight: 500; font-size: 14px; color: #333;">Select
+                  Product Tags:</label>
+                <div class="tags-selection"
+                  style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px; background: #f9f9f9; border: 1px solid #ddd; border-radius: 4px;">
+                  <label style="display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer;"><input
+                      type="checkbox" name="tags" value="Second-hand"> Second-hand</label>
+                  <label style="display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer;"><input
+                      type="checkbox" name="tags" value="New"> New (Unused)</label>
+                  <label style="display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer;"><input
+                      type="checkbox" name="tags" value="Good Condition"> Good Condition</label>
+                  <label style="display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer;"><input
+                      type="checkbox" name="tags" value="Negotiable"> Price Negotiable</label>
+                  <label style="display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer;"><input
+                      type="checkbox" name="tags" value="Authentic"> Authentic 100%</label>
+                  <label style="display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer;"><input
+                      type="checkbox" name="tags" value="Fast Delivery"> Fast Delivery</label>
+                </div>
+              </div>
+              <input type="tel" name="phone" placeholder="Phone Number (10 digits)" class="sell-input"
+                pattern="[0-9]{10}" maxlength="10" required />
+            </div> <!-- Added missing closing div for input-group-sell -->
+
+            <div class="boost-option"
+              style="margin-top: 15px; background: #fff5f5; padding: 12px; border-radius: 8px; border: 1px dashed #db4444;">
+              <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                <input type="checkbox" id="boostCheckbox" name="isRecommended" value="true"
+                  style="width: 20px; height: 20px; cursor: pointer;" />
+                <span style="font-size: 14px; color: #333; font-weight: 500;">
+                  Boost this post to Recommended! (Sell 2x Faster)
+                  <br />
+                  <small style="color: #db4444; font-weight: 600;">Only 20 THB fee</small>
+                </span>
+              </label>
+            </div>
+
+            <button type="submit" id="postProductBtn" class="btn-confirm-sell">Post Product</button>
+          </div>
+        </div>
+      </form>
+    </main>
+
+    <!-- ==================== PAYMENT MODAL ==================== -->
+    <div id="paymentOverlay"
+      style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:9999; backdrop-filter:blur(4px); opacity:0; transition: opacity 0.3s ease;">
+      <div id="paymentModal"
+        style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%) scale(0.9); background:#fff; border-radius:16px; width:420px; max-width:90vw; box-shadow:0 20px 60px rgba(0,0,0,0.3); overflow:hidden; transition: transform 0.3s ease, opacity 0.3s ease; opacity:0; font-family:'Poppins',sans-serif;">
+
+        <!-- Modal Header -->
+        <div
+          style="background: linear-gradient(135deg, #db4444, #e06767); padding: 24px 28px; color:#fff; position:relative;">
+          <button id="closeModal" type="button"
+            style="position:absolute; top:14px; right:18px; background:rgba(255,255,255,0.2); border:none; color:#fff; font-size:18px; width:32px; height:32px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:0.2s;"
+            onmouseover="this.style.background='rgba(255,255,255,0.4)'"
+            onmouseout="this.style.background='rgba(255,255,255,0.2)'">&times;</button>
+          <div style="font-size:13px; text-transform:uppercase; letter-spacing:1.5px; opacity:0.85; margin-bottom:4px;">
+            Payment Required</div>
+          <div style="font-size:22px; font-weight:700;">Boost Your Product 🚀</div>
+        </div>
+
+        <!-- Modal Body -->
+        <div style="padding: 28px;">
+          <!-- Price Summary -->
+          <div
+            style="display:flex; justify-content:space-between; align-items:center; padding:14px 18px; background:#f9f9f9; border-radius:10px; margin-bottom:20px;">
+            <div>
+              <div style="font-size:13px; color:#888;">Service</div>
+              <div style="font-size:15px; font-weight:600; color:#333;">Recommended Boost</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:13px; color:#888;">Total</div>
+              <div style="font-size:22px; font-weight:700; color:#db4444;">฿20</div>
+            </div>
+          </div>
+
+          <!-- QR Code Section -->
+          <div style="text-align:center; margin-bottom:20px;">
+            <div style="font-size:13px; color:#888; margin-bottom:12px;">Scan QR Code to pay via PromptPay</div>
+            <div
+              style="display:inline-block; padding:16px; background:#fff; border:2px solid #eee; border-radius:12px;">
+              <!-- Mock QR Code using CSS -->
+              <svg width="160" height="160" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+                <rect width="160" height="160" fill="#fff" />
+                <!-- QR Pattern (simplified mock) -->
+                <rect x="10" y="10" width="40" height="40" fill="#000" rx="4" />
+                <rect x="14" y="14" width="32" height="32" fill="#fff" rx="2" />
+                <rect x="20" y="20" width="20" height="20" fill="#000" rx="2" />
+                <rect x="110" y="10" width="40" height="40" fill="#000" rx="4" />
+                <rect x="114" y="14" width="32" height="32" fill="#fff" rx="2" />
+                <rect x="120" y="20" width="20" height="20" fill="#000" rx="2" />
+                <rect x="10" y="110" width="40" height="40" fill="#000" rx="4" />
+                <rect x="14" y="114" width="32" height="32" fill="#fff" rx="2" />
+                <rect x="20" y="120" width="20" height="20" fill="#000" rx="2" />
+                <!-- Center data blocks -->
+                <rect x="60" y="10" width="10" height="10" fill="#000" />
+                <rect x="80" y="10" width="10" height="10" fill="#000" />
+                <rect x="60" y="30" width="10" height="10" fill="#000" />
+                <rect x="90" y="30" width="10" height="10" fill="#000" />
+                <rect x="70" y="60" width="20" height="20" fill="#db4444" rx="4" />
+                <rect x="10" y="60" width="10" height="10" fill="#000" />
+                <rect x="30" y="60" width="10" height="10" fill="#000" />
+                <rect x="10" y="80" width="10" height="10" fill="#000" />
+                <rect x="40" y="80" width="10" height="10" fill="#000" />
+                <rect x="60" y="90" width="10" height="10" fill="#000" />
+                <rect x="80" y="90" width="10" height="10" fill="#000" />
+                <rect x="100" y="60" width="10" height="10" fill="#000" />
+                <rect x="120" y="80" width="10" height="10" fill="#000" />
+                <rect x="140" y="60" width="10" height="10" fill="#000" />
+                <rect x="110" y="110" width="10" height="10" fill="#000" />
+                <rect x="130" y="110" width="10" height="10" fill="#000" />
+                <rect x="110" y="130" width="10" height="10" fill="#000" />
+                <rect x="140" y="140" width="10" height="10" fill="#000" />
+                <rect x="60" y="110" width="10" height="10" fill="#000" />
+                <rect x="80" y="130" width="10" height="10" fill="#000" />
+                <rect x="60" y="140" width="10" height="10" fill="#000" />
+              </svg>
+            </div>
+            <div style="margin-top:10px; font-size:12px; color:#aaa;">PromptPay: xxx-xxx-xxxx (Global2Hand)</div>
+          </div>
+
+          <!-- Timer -->
+          <div style="text-align:center; margin-bottom:20px;">
+            <div style="font-size:12px; color:#888; margin-bottom:6px;">Time remaining</div>
+            <div id="paymentTimer"
+              style="font-size:28px; font-weight:700; color:#db4444; font-family:'Inter',monospace;">05:00</div>
+          </div>
+
+          <!-- Action Buttons -->
+          <button id="confirmPayBtn" type="button"
+            style="width:100%; height:50px; background:#db4444; color:#fff; border:none; border-radius:8px; font-family:'Poppins'; font-size:15px; font-weight:600; cursor:pointer; transition:0.3s; display:flex; align-items:center; justify-content:center; gap:8px;"
+            onmouseover="this.style.background='#c03030'" onmouseout="this.style.background='#db4444'">
+            I have paid — Confirm Payment
+          </button>
+          <button id="cancelPayBtn" type="button"
+            style="width:100%; height:42px; background:transparent; color:#888; border:1px solid #ddd; border-radius:8px; font-family:'Poppins'; font-size:13px; cursor:pointer; margin-top:10px; transition:0.3s;"
+            onmouseover="this.style.borderColor='#db4444'; this.style.color='#db4444'"
+            onmouseout="this.style.borderColor='#ddd'; this.style.color='#888'">
+            Cancel — Post without Boost
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- ==================== END PAYMENT MODAL ==================== -->
+
+    <%- include('partials/footer') %>
+      <script>
+        const fileInput = document.getElementById("fileInput");
+        const uploadBtn = document.getElementById("uploadBtn");
+        const imagePreview = document.getElementById("imagePreview");
+        const placeholderIcon = document.getElementById("placeholderIcon");
+        const uploadText = document.getElementById("uploadText");
+        const fileNameDisplay = document.getElementById("fileNameDisplay");
+        const deleteBtn = document.getElementById("deleteBtn");
+
+        // === File Upload Preview ===
+        fileInput.addEventListener("change", function () {
+          const file = this.files[0];
+          if (file) {
+            const allowedExtensions = ['jpg', 'jpeg', 'png'];
+            const fileExtension = file.name.split('.').pop().toLowerCase();
+            if (!allowedExtensions.includes(fileExtension)) {
+              alert("❌ เฉพาะไฟล์นามสกุล .jpg, .jpeg, .png เท่านั้นที่อนุญาตให้เปิดได้");
+              this.value = "";
+              return;
+            }
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              imagePreview.src = e.target.result;
+              imagePreview.style.display = "block";
+              placeholderIcon.style.display = "none";
+              uploadText.style.display = "none";
+              uploadBtn.style.padding = "10px";
+              fileNameDisplay.innerText = `📄 ${file.name}`;
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+
+        // === Delete Image ===
+        deleteBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          fileInput.value = "";
+          imagePreview.style.display = "none";
+          placeholderIcon.style.display = "block";
+          uploadText.style.display = "block";
+          fileNameDisplay.innerText = "📄 No selected File -";
+        });
+
+        // === Side Image Preview ===
+        function previewSideImage(input, num) {
+          const file = input.files[0];
+          const preview = document.getElementById("sidePreview" + num);
+          const icon = document.getElementById("sideIcon" + num);
+          if (file) {
+            const allowedExtensions = ['jpg', 'jpeg', 'png'];
+            const fileExtension = file.name.split('.').pop().toLowerCase();
+            if (!allowedExtensions.includes(fileExtension)) {
+              alert("❌ เฉพาะไฟล์นามสกุล .jpg, .jpeg, .png เท่านั้น");
+              input.value = "";
+              return;
+            }
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              preview.src = e.target.result;
+              preview.style.display = "block";
+              icon.style.display = "none";
+            };
+            reader.readAsDataURL(file);
+          }
+        }
+
+        // =====================================================
+        // === BOOST PAYMENT MODAL LOGIC ===
+        // =====================================================
+        const sellingForm = document.querySelector('form[action="/items/add"]');
+        const boostCheckbox = document.getElementById('boostCheckbox');
+        const overlay = document.getElementById('paymentOverlay');
+        const modal = document.getElementById('paymentModal');
+        const closeModalBtn = document.getElementById('closeModal');
+        const confirmPayBtn = document.getElementById('confirmPayBtn');
+        const cancelPayBtn = document.getElementById('cancelPayBtn');
+        const timerDisplay = document.getElementById('paymentTimer');
+        let countdownInterval = null;
+
+        // Intercept form submit when Boost is checked
+        sellingForm.addEventListener('submit', function (e) {
+          // Check if form is valid first (native HTML5 validation)
+          if (!sellingForm.checkValidity()) {
+            return; // Let browser show its native validation messages
+          }
+
+          if (boostCheckbox && boostCheckbox.checked) {
+            e.preventDefault(); // Stop form — show payment modal first
+            openPaymentModal();
+          }
+          // If not checked, form submits normally
+        });
+
+        function openPaymentModal() {
+          overlay.style.display = 'block';
+          // Trigger animation
+          requestAnimationFrame(() => {
+            overlay.style.opacity = '1';
+            modal.style.opacity = '1';
+            modal.style.transform = 'translate(-50%, -50%) scale(1)';
+          });
+          startTimer(300); // 5 minutes = 300 seconds
+        }
+
+        function closePaymentModal() {
+          overlay.style.opacity = '0';
+          modal.style.opacity = '0';
+          modal.style.transform = 'translate(-50%, -50%) scale(0.9)';
+          clearInterval(countdownInterval);
+          setTimeout(() => {
+            overlay.style.display = 'none';
+          }, 300);
+        }
+
+        function startTimer(seconds) {
+          let remaining = seconds;
+          updateTimerDisplay(remaining);
+          clearInterval(countdownInterval);
+          countdownInterval = setInterval(() => {
+            remaining--;
+            updateTimerDisplay(remaining);
+            if (remaining <= 0) {
+              clearInterval(countdownInterval);
+              alert('⏰ หมดเวลาชำระเงิน กรุณาลองใหม่อีกครั้ง');
+              closePaymentModal();
+            }
+          }, 1000);
+        }
+
+        function updateTimerDisplay(seconds) {
+          const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+          const s = String(seconds % 60).padStart(2, '0');
+          timerDisplay.textContent = `${m}:${s}`;
+        }
+
+        // Confirm Payment — submit form
+        confirmPayBtn.addEventListener('click', () => {
+          clearInterval(countdownInterval);
+          // Show success feedback
+          confirmPayBtn.innerHTML = '✅ Payment Confirmed!';
+          confirmPayBtn.style.background = '#27ae60';
+          confirmPayBtn.disabled = true;
+          cancelPayBtn.style.display = 'none';
+
+          setTimeout(() => {
+            closePaymentModal();
+            // Submit the form programmatically
+            sellingForm.submit();
+          }, 1500);
+        });
+
+        // Cancel — post without boost
+        cancelPayBtn.addEventListener('click', () => {
+          boostCheckbox.checked = false; // Uncheck boost
+          closePaymentModal();
+          sellingForm.submit(); // Submit without boost
+        });
+
+        // Close modal (X button)
+        closeModalBtn.addEventListener('click', closePaymentModal);
+
+        // Close on overlay click
+        overlay.addEventListener('click', (e) => {
+          if (e.target === overlay) closePaymentModal();
+        });
+      </script>
+</body>
+
+</html>

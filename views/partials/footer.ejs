@@ -1,0 +1,102 @@
+<footer class="main-footer">
+  <div class="container footer-grid">
+    <div class="footer-col">
+      <h3>Support</h3>
+      <p>114 Sukhumvit Soi 23, Watthana District, Bangkok 10110.</p>
+      <p>Global2Hand@gmail.com</p>
+      <p>087-777-7777</p>
+    </div>
+    <div class="footer-col">
+      <h3>Account</h3>
+      <ul>
+        <li><a href="/account">My Account</a></li>
+        <li><a href="/auth/login">Login</a></li>
+        <li><a href="/wishlist">Wishlist</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3>About Global2Hand</h3>
+      <ul>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="divider-footer"></div>
+    <p>Copyright© 2026 Designed by Global2Hand.</p>
+  </div>
+</footer>
+
+<!-- Global Wishlist AJAX Script -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // ดักจับการคลิกที่ปุ่มหัวใจ (ที่มี href เริ่มต้นด้วย /wishlist/add)
+    document.addEventListener('click', async (e) => {
+      const wishlistBtn = e.target.closest('a[href^="/wishlist/add/"]');
+      
+      if (wishlistBtn) {
+        e.preventDefault(); // ป้องกันการเปลี่ยนหน้า/รีเฟรช
+        
+        const url = wishlistBtn.href;
+        
+        try {
+          const response = await fetch(url, {
+            headers: {
+              'Accept': 'application/json',
+              'X-Requested-With': 'XMLHttpRequest'
+            }
+          });
+          
+          const data = await response.json();
+          
+          if (data.success) {
+            // 1. เปลี่ยนสีหัวใจ หรือแสดงแจ้งเตือนเล็กๆ
+            wishlistBtn.style.backgroundColor = '#db4444';
+            const img = wishlistBtn.querySelector('img');
+            if (img) img.style.filter = 'brightness(0) invert(1)';
+            
+            // 2. แสดงแจ้งเตือนแบบพรีเมียม (Toast)
+            showToast('Added to Wishlist! ❤️');
+          }
+        } catch (err) {
+          console.error('Wishlist error:', err);
+        }
+      }
+    });
+
+    // ฟังก์ชันแสดง Toast แจ้งเตือนแบบง่ายๆ แต่พรีเมียม
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.innerText = message;
+      toast.style.cssText = `
+        position: fixed;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #333;
+        color: #fff;
+        padding: 12px 24px;
+        border-radius: 50px;
+        font-family: 'Poppins', sans-serif;
+        font-size: 14px;
+        z-index: 10000;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        opacity: 0;
+        transition: opacity 0.3s, bottom 0.3s;
+      `;
+      document.body.appendChild(toast);
+      
+      // Animate in
+      setTimeout(() => {
+        toast.style.opacity = '1';
+        toast.style.bottom = '50px';
+      }, 100);
+      
+      // Remove after 3 seconds
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+  });
+</script>

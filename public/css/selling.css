@@ -1,0 +1,417 @@
+/* --- Base Styles & Nav --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Poppins", sans-serif;
+  background: #fff;
+  color: #000;
+  overflow-x: hidden;
+}
+.container {
+  max-width: 1170px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 15px;
+  box-sizing: border-box;
+}
+.section-spacing {
+  margin-top: 80px;
+  margin-bottom: 140px;
+}
+.divider {
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.3);
+  width: 100%;
+}
+
+/* Navigation Styles */
+.top-header {
+  background: #000;
+  color: #fff;
+  height: 48px;
+  display: flex;
+  align-items: center;
+}
+.top-header-content {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 230px;
+  font-size: 14px;
+}
+.promo a {
+  color: #fff;
+  font-weight: 600;
+  margin-left: 8px;
+}
+.lang-dropdown {
+  background: transparent;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+.lang-dropdown option {
+  color: #000;
+}
+
+.main-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 0 16px;
+}
+.logo {
+  font-family: "Inter";
+  font-weight: 700;
+  font-size: 24px;
+  letter-spacing: 0.03em;
+}
+.nav-links {
+  display: flex;
+  gap: 48px;
+  list-style: none;
+}
+.nav-links a {
+  text-decoration: none;
+  color: #000;
+  font-size: 16px;
+}
+.nav-links a:hover {
+  border-bottom: 1px solid #000;
+}
+
+.nav-icons {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.search-bar {
+  background: #f5f5f5;
+  padding: 7px 12px 7px 20px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+}
+.search-bar input {
+  border: none;
+  background: transparent;
+  outline: none;
+  width: 150px;
+  font-size: 12px;
+}
+.search-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.search-btn img {
+  width: 20px;
+  height: 20px;
+}
+.icon-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.nav-icon-img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.breadcrumb {
+  margin-bottom: 60px;
+  font-size: 14px;
+}
+.breadcrumb span {
+  color: #000;
+}
+
+/* --- Layout --- */
+.selling-layout {
+  display: flex;
+  gap: 60px;
+  align-items: flex-start;
+}
+
+/* --- Left: Upload Section --- */
+.upload-section {
+  display: flex;
+  gap: 30px;
+  flex: 1.2;
+}
+
+.side-placeholders {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.img-box {
+    width: 86px;
+    height: 86px;
+    background: #D9D9D9;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #777;
+    cursor: pointer;
+    overflow: hidden; /* กันรูปโผล่พ้นขอบมน */
+    transition: 0.2s;
+    border: 1px solid transparent;
+}
+
+.img-box:hover {
+    background: #cccccc;
+    border-color: #1E77CC;
+}
+
+/* ปรับให้รูปในกล่องเล็กแสดงเต็มพื้นที่ */
+.img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* ตัดรูปให้เต็มกล่องสี่เหลี่ยมพอดี */
+}
+
+.main-upload-card {
+  flex: 1;
+  background: #fff;
+  padding: 22px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 20px rgba(30, 119, 204, 0.1);
+  height: auto;
+}
+
+.upload-area {
+  border: 2px dashed #1e77cc;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+
+  min-height: 250px;
+  height: auto;
+  padding: 20px;
+  transition: 0.3s;
+}
+
+#imagePreview {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  display: block;
+  border-radius: 4px;
+}
+
+.cloud-icon {
+  font-size: 50px;
+  color: #1e77cc;
+}
+
+
+.file-status-bar {
+  margin-top: 20px;
+  background: #e9f0fe;
+  padding: 8px 15px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* --- Right: Details Section --- */
+.details-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.input-group-sell {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.sell-input {
+  width: 100%;
+  height: 50px;
+  padding: 0 20px;
+  background: #f5f5f5;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  font-family: "Poppins";
+  font-size: 16px;
+  color: #333;
+  outline: none;
+  transition: 0.3s;
+}
+.sell-input:focus {
+  border-color: #db4444;
+  background: #fff;
+}
+.sell-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #db4444;
+}
+
+.dropdown-row {
+  display: flex;
+  gap: 20px;
+}
+.custom-select-wrapper {
+  flex: 1;
+}
+
+.themed-select {
+  width: 100%;
+  height: 50px;
+  background: #f5f5f5;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  padding: 0 15px;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  appearance: none; /* หายห่วงเรื่องความต่างของเบราว์เซอร์ */
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23db4444' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 20px;
+  transition: all 0.3s ease;
+}
+.themed-select:hover {
+  border-color: rgba(219, 68, 68, 0.3);
+}
+.themed-select:focus {
+  border-color: #db4444;
+  background: #fff;
+  outline: none;
+  box-shadow: 0 0 10px rgba(219, 68, 68, 0.1);
+}
+
+.btn-confirm-sell {
+  align-self: flex-end;
+  width: auto;
+  min-width: 180px;
+  padding: 0 40px;
+  height: 56px;
+  background: #db4444;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-family: "Poppins";
+  font-weight: 500;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: 0.3s;
+}
+.btn-confirm-sell:hover {
+  background: #e06767;
+}
+
+/* --- Footer Styles --- */
+.main-footer {
+  background: #000;
+  color: #fff;
+  padding: 40px 0 24px;
+  margin-top: 80px;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 80px;
+}
+.footer-col h3 {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 24px;
+}
+.footer-col p {
+  color: #fafafa;
+  font-size: 16px;
+  margin-bottom: 16px;
+  opacity: 0.8;
+}
+.footer-col ul {
+  list-style: none;
+}
+.footer-col ul li {
+  margin-bottom: 16px;
+}
+.footer-col ul li a {
+  color: #fafafa;
+  text-decoration: none;
+  font-size: 16px;
+  opacity: 0.8;
+  transition: 0.3s;
+}
+.footer-col ul li a:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+.footer-bottom {
+  margin-top: 60px;
+  text-align: center;
+}
+.divider-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 16px;
+}
+.footer-bottom p {
+  color: #fff;
+  opacity: 0.4;
+  font-size: 16px;
+}
+
+/* --- Responsive Styles --- */
+@media (max-width: 768px) {
+  .selling-layout {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .upload-section {
+    flex-direction: column;
+  }
+
+  .side-placeholders {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .dropdown-row {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .btn-confirm-sell {
+    width: 100%;
+    align-self: stretch;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    text-align: center;
+  }
+
+  .section-spacing {
+    margin-top: 40px;
+    margin-bottom: 60px;
+  }
+}

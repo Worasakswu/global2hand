@@ -1,0 +1,415 @@
+/* --- Base Styles & Nav --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Poppins", sans-serif;
+  background: #fff;
+  color: #000;
+  overflow-x: hidden;
+}
+.container {
+  max-width: 1170px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 15px;
+  box-sizing: border-box;
+}
+.section-spacing {
+  margin-top: 80px;
+  margin-bottom: 140px;
+}
+.divider {
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.3);
+  width: 100%;
+}
+
+/* Navigation Styles */
+.top-header {
+  background: #000;
+  color: #fff;
+  height: 48px;
+  display: flex;
+  align-items: center;
+}
+.top-header-content {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 230px;
+  font-size: 14px;
+}
+.promo a {
+  color: #fff;
+  font-weight: 600;
+  margin-left: 8px;
+}
+.lang-dropdown {
+  background: transparent;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+.lang-dropdown option {
+  color: #000;
+}
+
+.main-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 0 16px;
+}
+.logo {
+  font-family: "Inter";
+  font-weight: 700;
+  font-size: 24px;
+  letter-spacing: 0.03em;
+}
+.nav-links {
+  display: flex;
+  gap: 48px;
+  list-style: none;
+}
+.nav-links a {
+  text-decoration: none;
+  color: #000;
+  font-size: 16px;
+}
+.nav-links a:hover {
+  border-bottom: 1px solid #000;
+}
+
+.nav-icons {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.search-bar {
+  background: #f5f5f5;
+  padding: 7px 12px 7px 20px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+}
+.search-bar input {
+  border: none;
+  background: transparent;
+  outline: none;
+  width: 150px;
+  font-size: 12px;
+}
+.search-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.search-btn img {
+  width: 20px;
+  height: 20px;
+}
+.icon-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.nav-icon-img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+/* --- 3. Account Layout --- */
+.account-page {
+  margin-top: 80px;
+  margin-bottom: 140px;
+}
+.account-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 80px;
+}
+.breadcrumb {
+  font-size: 14px;
+  margin-top: 40px;
+}
+.breadcrumb .fade {
+  opacity: 0.5;
+}
+.welcome-msg {
+  font-size: 14px;
+}
+.welcome-msg .highlight {
+  color: #db4444;
+}
+
+.account-layout {
+  display: flex;
+  gap: 100px;
+}
+
+/* Sidebar */
+.account-sidebar {
+  width: 200px;
+}
+.sidebar-group {
+  margin-bottom: 24px;
+}
+.sidebar-group h4 {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  color: #000;
+}
+.sidebar-group ul {
+  list-style: none;
+  padding-left: 35px;
+}
+.sidebar-group li {
+  font-size: 16px;
+  opacity: 0.8;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+  color: #000;
+}
+.sidebar-group li.active {
+  color: #db4444;
+  opacity: 1;
+  font-weight: 500;
+}
+.sidebar-group li:hover {
+  opacity: 1;
+  color: #db4444;
+}
+.wishlist-link {
+  cursor: pointer;
+}
+.btn-sell-sidebar {
+    display: inline-block;
+    background-color: #f00000; 
+    color: #FFFFFF !important; 
+    padding: 10px 20px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.btn-sell-sidebar:hover {
+    background-color: #ff0000; 
+    box-shadow: 0 4px 10px rgba(139, 26, 26, 0.3);
+    transform: translateY(-1px);
+}
+
+/* Edit Profile Card */
+.edit-profile-card {
+  flex-grow: 1;
+  padding: 40px 80px;
+  background: #fff;
+  box-shadow: 0px 1px 13px rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+}
+
+.edit-profile-card h2 {
+  color: #db4444;
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 24px;
+}
+
+.form-row {
+  display: flex;
+  gap: 50px;
+  margin-bottom: 24px;
+}
+.input-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.input-box label {
+  font-size: 16px;
+}
+.input-box input {
+  background: #f5f5f5;
+  border: none;
+  border-radius: 4px;
+  padding: 13px 16px;
+  outline: none;
+  font-size: 16px;
+}
+
+.password-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 24px;
+}
+.password-section label {
+  font-size: 16px;
+}
+.password-section input {
+  background: #f5f5f5;
+  border: none;
+  border-radius: 4px;
+  padding: 13px 16px;
+  outline: none;
+  font-size: 16px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 32px;
+  margin-top: 40px;
+}
+
+.btn-cancel, .btn-logout {
+  background: transparent;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px 30px;
+  font-size: 16px;
+  cursor: pointer;
+  font-family: "Poppins";
+  text-decoration: none;
+  display: inline-block;
+  transition: 0.3s;
+}
+
+.btn-logout {
+  color: #db4444;
+  border-color: #db4444;
+  margin-right: auto;
+}
+
+.btn-cancel {
+  color: #000;
+}
+
+.btn-cancel:hover, .btn-logout:hover {
+  background: #f5f5f5;
+  border-color: #333;
+}
+
+.btn-save {
+  background: #db4444;
+  color: #fff;
+  padding: 12px 48px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+
+/* --- Footer Styles --- */
+.main-footer {
+  background: #000;
+  color: #fff;
+  padding: 40px 0 24px;
+  margin-top: 80px;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 80px;
+}
+.footer-col h3 {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 24px;
+}
+.footer-col p {
+  color: #fafafa;
+  font-size: 16px;
+  margin-bottom: 16px;
+  opacity: 0.8;
+}
+.footer-col ul {
+  list-style: none;
+}
+.footer-col ul li {
+  margin-bottom: 16px;
+}
+.footer-col ul li a {
+  color: #fafafa;
+  text-decoration: none;
+  font-size: 16px;
+  opacity: 0.8;
+  transition: 0.3s;
+}
+.footer-col ul li a:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+.footer-bottom {
+  margin-top: 60px;
+  text-align: center;
+}
+.divider-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 16px;
+}
+.footer-bottom p {
+  color: #fff;
+  opacity: 0.4;
+  font-size: 16px;
+}
+
+/* --- Responsive Styles --- */
+@media (max-width: 768px) {
+  .account-layout {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .account-sidebar {
+    width: 100%;
+  }
+
+  .edit-profile-card {
+    padding: 20px;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+
+  .account-header {
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 30px;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    text-align: center;
+  }
+
+  .section-spacing {
+    margin-top: 40px;
+    margin-bottom: 60px;
+  }
+}

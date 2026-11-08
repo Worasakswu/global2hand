@@ -1,0 +1,147 @@
+
+
+<header class="top-header">
+  <div class="container top-header-content">
+    <div class="promo">
+      Buy and Sell online easily at Global2Hand <a href="/items"
+        style="color: #fff; font-weight: 600; margin-left: 8px; text-decoration: underline;">ShopNow</a>
+    </div>
+  </div>
+</header>
+
+<nav class="main-nav container">
+  <div class="logo"><a href="/" style="text-decoration: none; color: inherit;"><img src="/image/logo.png"
+        alt="Global2Hand" style="height: 180px; object-fit: contain; mix-blend-mode: multiply;"></a></div>
+  <ul class="nav-links"
+    style="display: flex; list-style: none; gap: 30px; margin: 0; padding: 0; align-items: center; margin-left: 40px;">
+    <li><a href="/">Home</a></li>
+    <li><a href="/contact">Contact</a></li>
+    <% if (user && user.role==='admin' ) { %>
+      <li><a href="/categories/dashboard">Admin</a></li>
+      <% } %>
+        <% if (!user) { %>
+          <li><a href="/auth/login">Login</a></li>
+          <% } else { %>
+            <li><a href="/items/add">Selling</a></li>
+            <li><a href="/auth/logout">Logout</a></li>
+            <% } %>
+
+  </ul>
+
+  <div class="nav-icons" style="display: flex; align-items: center; gap: 25px; flex: 1; justify-content: flex-end;">
+    <div class="search-container-main" style="flex: 1; max-width: 500px; margin: 0 15px;">
+      <form action="/items" method="GET" class="search-bar"
+        style="display: flex; gap: 0; background: #f5f5f5; padding: 4px; border-radius: 4px; align-items: center; border: 1px solid #ddd; width: 100%;">
+        <!-- Province Select -->
+        <select name="province"
+          style="background: transparent; border: none; outline: none; font-size: 11px; color: #444; border-right: 1px solid #ccc; padding: 0 8px; height: 28px; cursor: pointer; min-width: 90px;">
+          <option value="">All Provinces</option>
+          <option value="Bangkok">Bangkok</option>
+          <option value="Amnat Charoen">Amnat Charoen</option>
+          <option value="Ang Thong">Ang Thong</option>
+          <option value="Bueng Kan">Bueng Kan</option>
+          <option value="Buriram">Buriram</option>
+          <option value="Chachoengsao">Chachoengsao</option>
+          <option value="Chai Nat">Chai Nat</option>
+          <option value="Chaiyaphum">Chaiyaphum</option>
+          <option value="Chanthaburi">Chanthaburi</option>
+          <option value="Chiang Mai">Chiang Mai</option>
+          <option value="Chiang Rai">Chiang Rai</option>
+          <option value="Chonburi">Chonburi</option>
+          <option value="Chumphon">Chumphon</option>
+          <option value="Kalasin">Kalasin</option>
+          <option value="Kamphaeng Phet">Kamphaeng Phet</option>
+          <option value="Kanchanaburi">Kanchanaburi</option>
+          <option value="Khon Kaen">Khon Kaen</option>
+          <option value="Krabi">Krabi</option>
+          <option value="Lampang">Lampang</option>
+          <option value="Lamphun">Lamphun</option>
+          <option value="Loei">Loei</option>
+          <option value="Lopburi">Lopburi</option>
+          <option value="Mae Hong Son">Mae Hong Son</option>
+          <option value="Maha Sarakham">Maha Sarakham</option>
+          <option value="Mukdahan">Mukdahan</option>
+          <option value="Nakhon Nayok">Nakhon Nayok</option>
+          <option value="Nakhon Pathom">Nakhon Pathom</option>
+          <option value="Nakhon Phanom">Nakhon Phanom</option>
+          <option value="Nakhon Ratchasima">Nakhon Ratchasima</option>
+          <option value="Nakhon Sawan">Nakhon Sawan</option>
+          <option value="Nakhon Si Thammarat">Nakhon Si Thammarat</option>
+          <option value="Nan">Nan</option>
+          <option value="Narathiwat">Narathiwat</option>
+          <option value="Nong Bua Lamphu">Nong Bua Lamphu</option>
+          <option value="Nong Khai">Nong Khai</option>
+          <option value="Nonthaburi">Nonthaburi</option>
+          <option value="Pathum Thani">Pathum Thani</option>
+          <option value="Pattani">Pattani</option>
+          <option value="Phang Nga">Phang Nga</option>
+          <option value="Phatthalung">Phatthalung</option>
+          <option value="Phayao">Phayao</option>
+          <option value="Phetchabun">Phetchabun</option>
+          <option value="Phetchaburi">Phetchaburi</option>
+          <option value="Phichit">Phichit</option>
+          <option value="Phitsanulok">Phitsanulok</option>
+          <option value="Phra Nakhon Si Ayutthaya">Phra Nakhon Si Ayutthaya</option>
+          <option value="Phrae">Phrae</option>
+          <option value="Prachinburi">Prachinburi</option>
+          <option value="Prachuap Khiri Khan">Prachuap Khiri Khan</option>
+          <option value="Ranong">Ranong</option>
+          <option value="Ratchaburi">Ratchaburi</option>
+          <option value="Rayong">Rayong</option>
+          <option value="Roi Et">Roi Et</option>
+          <option value="Sa Kaeo">Sa Kaeo</option>
+          <option value="Sakon Nakhon">Sakon Nakhon</option>
+          <option value="Samut Prakan">Samut Prakan</option>
+          <option value="Samut Sakhon">Samut Sakhon</option>
+          <option value="Samut Songkhram">Samut Songkhram</option>
+          <option value="Saraburi">Saraburi</option>
+          <option value="Satun">Satun</option>
+          <option value="Sing Buri">Sing Buri</option>
+          <option value="Sisaket">Sisaket</option>
+          <option value="Songkhla">Songkhla</option>
+          <option value="Sukhothai">Sukhothai</option>
+          <option value="Suphan Buri">Suphan Buri</option>
+          <option value="Surat Thani">Surat Thani</option>
+          <option value="Surin">Surin</option>
+          <option value="Tak">Tak</option>
+          <option value="Trang">Trang</option>
+          <option value="Trat">Trat</option>
+          <option value="Ubon Ratchathani">Ubon Ratchathani</option>
+          <option value="Udon Thani">Udon Thani</option>
+          <option value="Uthai Thani">Uthai Thani</option>
+          <option value="Uttaradit">Uttaradit</option>
+          <option value="Yala">Yala</option>
+          <option value="Yasothon">Yasothon</option>
+        </select>
+
+        <!-- Tags Select -->
+        <select name="tags"
+          style="background: transparent; border: none; outline: none; font-size: 11px; color: #444; border-right: 1px solid #ccc; padding: 0 8px; height: 28px; cursor: pointer; min-width: 90px;">
+          <option value="">All Tags</option>
+          <option value="Second-hand">Second-hand</option>
+          <option value="New">New (Unused)</option>
+          <option value="Good Condition">Good Condition</option>
+          <option value="Negotiable">Price Negotiable</option>
+          <option value="Authentic">Authentic 100%</option>
+          <option value="Fast Delivery">Fast Delivery</option>
+        </select>
+
+        <input type="text" name="keyword" placeholder="Search products..."
+          style="border: none; background: transparent; outline: none; flex: 1; font-size: 12px; padding-left: 10px;" />
+        <button type="submit"
+          style="background: none; border: none; cursor: pointer; padding: 0 5px; display: flex; align-items: center;"
+          aria-label="Search">
+          <img src="/image/search.png" alt="Search Icon" style="width: 18px; height: 18px;">
+        </button>
+      </form>
+    </div>
+    <div class="icon-group" style="display: flex; gap: 15px; align-items: center;">
+      <a href="/wishlist" aria-label="View Wishlist">
+        <img src="/image/fav.png" class="nav-icon-img" alt="Favorite Icon" style="width: 24px; height: 24px; object-fit: contain;">
+      </a>
+      <a href="/account" aria-label="My Account"><img src="/image/profile.png" class="nav-icon-img" alt="Profile Icon"
+          style="width: 24px; height: 24px; object-fit: contain;"></a>
+    </div>
+  </div>
+</nav>
+<div class="divider"></div>

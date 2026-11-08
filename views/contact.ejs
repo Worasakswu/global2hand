@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <%- include('partials/common-head') %>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact - Global2Hand</title>
+    <link rel="stylesheet" href="/css/contact.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Poppins:wght@400;500;600&display=swap"
+      rel="stylesheet" />
+</head>
+
+<body>
+  <%- include('partials/header') %>
+
+    <main class="container contact-page section-spacing">
+      <nav class="breadcrumb">
+        <span class="fade">Home</span> / <span>Contact</span>
+      </nav>
+
+      <div class="contact-layout">
+        <aside class="contact-sidebar">
+          <div class="info-group">
+            <div class="info-header">
+              <div class="icon-red-circle">📞</div>
+              <h4>Call To Us</h4>
+            </div>
+            <p>We are available 24/7, 7 days a week.</p>
+            <p>Phone: 087-777-7777</p>
+          </div>
+
+          <div class="horizontal-line"></div>
+
+          <div class="info-group">
+            <div class="info-header">
+              <div class="icon-red-circle">✉️</div>
+              <h4>Write To US</h4>
+            </div>
+            <p>Fill out our form and we will contact you within 24 hours.</p>
+            <p>Email: Global2Hand@gmail.com</p>
+          </div>
+        </aside>
+
+        <section class="contact-form-container">
+          <form class="contact-form" id="contactForm">
+            <div class="form-row">
+              <input type="text" id="contactName" placeholder="Your Name *" required />
+              <input type="email" id="contactEmail" placeholder="Your Email *" required />
+              <input type="tel" id="contactPhone" placeholder="Your Phone *" required />
+            </div>
+            <textarea id="contactMessage" placeholder="Your Message" required></textarea>
+            <div class="form-footer">
+              <button type="submit" class="btn-red-submit">Send Message</button>
+            </div>
+          </form>
+        </section>
+      </div>
+    </main>
+    <%- include('partials/footer') %>
+
+      <!-- Custom Success Popup -->
+      <div id="successPopup"
+        style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9999; align-items: center; justify-content: center;">
+        <div
+          style="background: white; padding: 30px; border-radius: 8px; text-align: center; max-width: 400px; width: 90%; box-shadow: 0 4px 15px rgba(0,0,0,0.2); animation: popIn 0.3s ease-out forwards;">
+          <div style="font-size: 50px; color: #4CAF50; margin-bottom: 15px;">✅</div>
+          <h3 style="margin-bottom: 10px; font-weight: 600;">Message Sent!</h3>
+          <p id="popupText" style="color: #666; font-size: 14px; margin-bottom: 20px;"></p>
+          <button id="closePopupBtn"
+            style="background: #db4444; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 500;">Go
+            To Homepage</button>
+        </div>
+      </div>
+
+      <!-- Animation Keyframes -->
+      <style>
+        @keyframes popIn {
+          0% {
+            transform: scale(0.8);
+            opacity: 0;
+          }
+
+          100% {
+            transform: scale(1);
+            opacity: 1;
+          }
+        }
+      </style>
+
+      <script>
+        document.getElementById('contactForm').addEventListener('submit', function (e) {
+          e.preventDefault();
+          const name = document.getElementById('contactName').value;
+          const msg = document.getElementById('contactMessage').value;
+
+          if (name && msg) {
+            // เซ็ตข้อความให้ Pop-up
+            document.getElementById('popupText').innerText = 'Thank you, ' + name + '! Your message from Global2Hand has been successfully sent.';
+
+            // แสดง Pop-up (เปลี่ยนจาก display: none เป็น flex)
+            document.getElementById('successPopup').style.display = 'flex';
+
+            // ล้างข้อมูลหน้าฟอร์ม
+            this.reset();
+          }
+        });
+
+        // ฟังก์ชันปิดปุ่ม
+        document.getElementById('closePopupBtn').addEventListener('click', function () {
+          document.getElementById('successPopup').style.display = 'none';
+          window.location.href = '/'; // กลับไปหน้าแรก
+        });
+      </script>
+</body>
+
+</html>

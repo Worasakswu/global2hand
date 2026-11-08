@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <%- include('partials/common-head') %>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - Global2Hand</title>
+    <link rel="stylesheet" href="/css/admin.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  <body>
+    <%- include('partials/header') %>
+
+    <main class="container admin-main-page section-spacing">
+      <nav class="breadcrumb">
+        <span class="fade">Home</span> / <span>Admin</span>
+      </nav>
+
+      <section class="admin-section admin-stats-summary">
+        <div class="admin-header-flex">
+          <h2>Inventory Overview</h2>
+          <p>Global stats per category</p>
+        </div>
+        <div class="category-stats-grid">
+           <% 
+             const iconMap = {
+               'Fashion': 'fashion.png',
+               'Music': 'music.png',
+               'Electronics': 'Electronics.png',
+               'Home & Lifestyle': 'Home & Lifestyle.png',
+               'Bicycles': 'bicycle.png',
+               'Sports': 'sports.png',
+               "Baby's & Toys": 'toys.png',
+               'Pets': 'Pets.png',
+               'Collection': 'Collection.png'
+             };
+           %>
+           <% categories.forEach(cat => { %>
+             <div class="stat-card">
+               <div class="stat-info">
+                 <span class="stat-label"><%= cat.name %></span>
+                 <h3 class="stat-value"><strong><%= (typeof cat.itemCount !== 'undefined') ? cat.itemCount : 0 %></strong> <small>items</small></h3>
+               </div>
+               <div class="stat-image-container">
+                 <img src="/image/<%= iconMap[cat.name] || 'Electronics.png' %>" alt="<%= cat.name %>">
+               </div>
+             </div>
+           <% }) %>
+        </div>
+      </section>
+
+      <section class="admin-section admin-products-section">
+        <div class="admin-header-flex">
+          <h2>Product Management</h2>
+          <p>You can manage all listings across the platform. Total items: <strong><%= totalProductsCount %></strong></p>
+        </div>
+
+        <div class="admin-table-container">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Category</th>
+                <th>Seller</th>
+                <th>Province</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% products.forEach(product => { %>
+                <tr>
+                  <td>
+                    <div class="admin-prod-thumb">
+                       <% const prodImg = (product.images && product.images.length > 0) ? product.images[0] : (product.image || '/image/electronics.png'); %>
+                       <img src="<%= prodImg %>" alt="<%= product.name %>">
+                    </div>
+                  </td>
+                  <td>
+                    <div class="prod-name-main"><%= product.name %></div>
+                    <% if(product.isRecommended) { %>
+                        <span class="admin-badge boosted">Boosted</span>
+                    <% } %>
+                  </td>
+                  <td><strong>฿<%= product.price.toLocaleString() %></strong></td>
+                  <td><%= product.category ? product.category.name : 'N/A' %></td>
+                  <td><%= product.seller ? product.seller.name : 'Unknown' %></td>
+                  <td><%= product.province || 'N/A' %></td>
+                  <td>
+                    <span class="admin-status-pill <%= product.status.toLowerCase() %>">
+                      <%= product.status %>
+                    </span>
+                  </td>
+                  <td class="admin-actions">
+                    <div class="action-btn-group">
+                        <a href="/items/<%= product._id %>" class="btn-action view" title="View">
+                            <img src="/image/eye-icon.png" alt="View">
+                        </a>
+                        <form action="/items/<%= product._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Do you want to delete this product permanently?')">
+                            <button type="submit" class="btn-action delete" title="Delete">
+                                <img src="/image/bin.png" alt="Delete">
+                            </button>
+                        </form>
+                    </div>
+                  </td>
+                </tr>
+              <% }) %>
+              <% if(products.length === 0) { %>
+                <tr>
+                    <td colspan="8" style="text-align: center; padding: 40px; color: #999;">No products found in the database.</td>
+                </tr>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination UI -->
+        <% if (totalPages > 1) { %>
+        <div class="pagination" style="display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 40px;">
+          <% 
+            const buildUrl = (p) => {
+              return `/categories/dashboard?page=${p}`;
+            };
+          %>
+          
+          <% if (currentPage > 1) { %>
+            <a href="<%= buildUrl(currentPage - 1) %>" style="text-decoration: none; padding: 8px 16px; background: #f5f5f5; border-radius: 4px; color: #333;">&larr; Prev</a>
+          <% } %>
+
+          <% for(let i = 1; i <= totalPages; i++) { %>
+            <a href="<%= buildUrl(i) %>" 
+               style="text-decoration: none; padding: 8px 16px; <%= currentPage === i ? 'background: #db4444; color: #fff;' : 'background: #f5f5f5; color: #333;' %> border-radius: 4px;">
+               <%= i %>
+            </a>
+          <% } %>
+
+          <% if (currentPage < totalPages) { %>
+            <a href="<%= buildUrl(currentPage + 1) %>" style="text-decoration: none; padding: 8px 16px; background: #f5f5f5; border-radius: 4px; color: #333;">Next &rarr;</a>
+          <% } %>
+        </div>
+        <% } %>
+      </section>
+    </main>
+    <%- include('partials/footer') %>
+    <script>
+      // ฟังก์ชันสำหรับสลับปุ่ม Day/Week/Month
+      function updateTimeFilter(element, type) {
+        // 1. ลบคลาส active ออกจากปุ่มทั้งหมดในกลุ่มนั้น
+        const buttons = element.parentElement.querySelectorAll(".filter-btn");
+        buttons.forEach((btn) => btn.classList.remove("active"));
+
+        // 2. เพิ่มคลาส active ให้ปุ่มที่ถูกกด
+        element.classList.add("active");
+
+        // 3. (Optional) อัปเดตข้อมูลกราฟตามประเภทที่กด
+        updateWatchlistData(type);
+      }
+
+      // ฟังก์ชันสมมติการอัปเดตกราฟ Watchlists
+      function updateWatchlistData(type) {
+        let newData;
+        let newLabels;
+
+        if (type === "day") {
+          newLabels = [
+            "May 5",
+            "May 6",
+            "May 7",
+            "May 8",
+            "May 9",
+            "May 10",
+            "May 11",
+          ];
+          newData = [150, 230, 210, 280, 380, 350, 260];
+        } else if (type === "week") {
+          newLabels = ["Week 1", "Week 2", "Week 3", "Week 4"];
+          newData = [800, 1200, 950, 1500];
+        } else {
+          newLabels = ["Jan", "Feb", "Mar", "Apr", "May"];
+          newData = [3000, 4500, 3800, 5200, 6100];
+        }
+
+        // อัปเดตข้อมูลเข้าไปใน Watchlists Chart (ctxLine ที่เราสร้างไว้ก่อนหน้า)
+        // หมายเหตุ: ต้องตรวจสอบว่าตัวแปร chartInstance ของคุณชื่ออะไร
+        if (window.watchlistsChartInstance) {
+          window.watchlistsChartInstance.data.labels = newLabels;
+          window.watchlistsChartInstance.data.datasets[0].data = newData;
+          window.watchlistsChartInstance.update();
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,246 @@
+/* --- Login-specific Content --- */
+
+/* --- 4. Main Content (Signup & Login) --- */
+.signup-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 100px auto 140px auto;
+    max-width: 1170px;
+    padding: 0 20px;
+}
+
+.side-image {
+    flex: 1;
+    max-width: 550px;
+    height: 600px;
+    background: #CBE4E8;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.side-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.form-section {
+    width: 100%;
+    max-width: 400px;
+}
+
+.form-header h1 {
+    font-family: 'Inter';
+    font-weight: 500;
+    font-size: 36px;
+    margin-bottom: 24px;
+    letter-spacing: 0.04em;
+}
+
+.form-header p {
+    font-size: 16px;
+    margin-bottom: 48px;
+}
+
+.input-group {
+    margin-bottom: 40px;
+}
+
+.input-group input {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    padding-bottom: 8px;
+    color: #000;
+}
+
+.input-group input::placeholder {
+    opacity: 0.4;
+}
+
+.underline {
+    width: 100%;
+    border-bottom: 1px solid rgba(0,0,0,0.5);
+}
+
+/* Buttons */
+.btn-create {
+    width: 100%;
+    height: 56px;
+    background: #DB4444;
+    color: #FAFAFA;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-create:hover {
+    background: #E06767;
+}
+
+.btn-google {
+    width: 100%;
+    height: 56px;
+    background: transparent;
+    border: 1px solid rgba(0,0,0,0.4);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 16px;
+}
+
+.google-icon img {
+    width: 24px;
+    height: 24px;
+}
+
+/* Login Page */
+.login-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 370px;
+    margin-top: 40px;
+}
+
+.login-btn-small {
+    width: 143px !important;
+}
+
+.forget-password {
+    color: #DB4444;
+    font-size: 16px;
+}
+
+.already-account {
+    margin-top: 32px;
+    text-align: center;
+    width: 370px;
+    color: rgba(0,0,0,0.7);
+}
+
+.already-account a {
+    color: #000;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(0,0,0,0.5);
+}
+
+/* --- 10. Footer Styles --- */
+.main-footer {
+  background: #000000;
+  color: #ffffff;
+  padding-top: 80px;
+  padding-bottom: 24px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr; /* แบ่งคอลัมน์ไม่เท่ากันตามเนื้อหา */
+  gap: 80px;
+  margin-bottom: 60px;
+}
+
+.footer-col h3 {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 24px;
+}
+
+.footer-col p,
+.footer-col li {
+  font-size: 16px;
+  font-weight: 400;
+  margin-bottom: 16px;
+  line-height: 24px;
+}
+
+.footer-col ul {
+  list-style: none;
+}
+
+.footer-col a {
+  color: #ffffff;
+  text-decoration: none;
+  opacity: 0.8;
+}
+
+.footer-col a:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+.footer-bottom {
+  text-align: center;
+}
+
+.divider-footer {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin-bottom: 16px;
+}
+
+.footer-bottom p {
+  font-size: 16px;
+  opacity: 0.4;
+}
+
+/* ปรับแต่งปุ่ม Log In ให้ขนาดพอดีตามดีไซน์ */
+.btn-login {
+    width: 143px;             
+    height: 56px;
+    background: #DB4444;
+    color: #FAFAFA;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+/* ปรับแต่งตัวอักษร Forget Password */
+.forget-password {
+    color: #DB4444;          
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+    text-decoration: none;   
+}
+
+.forget-password:hover {
+    text-decoration: underline; 
+}
+/* --- Responsive Styles --- */
+@media (max-width: 768px) {
+  .signup-container {
+    flex-direction: column;
+    margin: 40px auto 60px;
+  }
+  .side-image {
+    display: none;
+  }
+  .form-section {
+    max-width: 100%;
+  }
+  .form-header h1 {
+    font-size: 24px;
+  }
+  .login-controls {
+    width: 100%;
+  }
+  .already-account {
+    width: 100%;
+  }
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    text-align: center;
+  }
+}

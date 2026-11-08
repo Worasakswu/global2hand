@@ -1,0 +1,278 @@
+/* --- Global Styles & Common Components --- */
+
+/* 1. Global Reset & Fonts */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", "Kanit", sans-serif;
+  background: #fff;
+  color: #000;
+  overflow-x: hidden;
+}
+
+.container {
+  max-width: 1170px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 15px;
+  box-sizing: border-box;
+}
+
+.section-spacing {
+  margin-top: 80px;
+  margin-bottom: 140px;
+}
+
+.divider {
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.3);
+  width: 100%;
+}
+
+/* 2. Unified Header & Nav (Original Design) */
+.top-header {
+  background: #000;
+  color: #fff;
+  height: 48px;
+  display: flex;
+  align-items: center;
+}
+
+.top-header-content {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 230px;
+  font-size: 14px;
+}
+
+.promo a {
+  color: #fff;
+  font-weight: 600;
+  margin-left: 8px;
+}
+
+.lang-dropdown {
+  background: transparent;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.main-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0 5px; /* Standard Home Padding */
+}
+
+.logo {
+  font-family: "Inter";
+  font-weight: 700;
+  font-size: 24px;
+  letter-spacing: 0.03em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 48px;
+  list-style: none;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #000;
+  font-size: 16px;
+}
+
+.nav-links a:hover {
+  border-bottom: 1px solid #000;
+}
+
+.nav-icons {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.search-bar {
+  background: #f5f5f5;
+  padding: 7px 12px 7px 20px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.search-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.search-btn img {
+  width: 20px;
+  height: 20px;
+}
+
+.icon-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.nav-icon-img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+/* Common Components */
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: #db4444;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.red-rect {
+  width: 20px;
+  height: 40px;
+  background: #db4444;
+  border-radius: 4px;
+}
+
+/* --- 3. Responsive Styles --- */
+
+/* Medium screens (tablets, small laptops) */
+@media (max-width: 1200px) {
+  .top-header-content {
+    gap: 40px;
+  }
+}
+
+/* Tablets and below */
+@media (max-width: 768px) {
+  .top-header-content {
+    gap: 10px;
+    justify-content: center;
+    text-align: center;
+    padding: 0 10px;
+  }
+
+  .promo {
+    font-size: 11px;
+  }
+
+  .lang-dropdown {
+    display: none !important;
+  }
+
+  .main-nav {
+    flex-direction: column !important;
+    gap: 10px !important;
+    padding: 10px 0 !important;
+  }
+
+  /* Override inline styles on nav-links */
+  .nav-links {
+    gap: 15px !important;
+    padding: 8px 0 !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    margin-left: 0 !important;
+  }
+
+  /* Override inline styles on nav-icons */
+  .nav-icons {
+    width: 100% !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+
+  /* Make search container full width */
+  .search-container-main {
+    max-width: 100% !important;
+    margin: 0 !important;
+    width: 100% !important;
+  }
+
+  .search-bar {
+    flex-wrap: wrap !important;
+    gap: 5px !important;
+    width: 100% !important;
+  }
+
+  /* Make province/tags selects stack or shrink */
+  .search-bar select {
+    min-width: 70px !important;
+    font-size: 10px !important;
+    padding: 0 4px !important;
+  }
+
+  .search-bar input[type="text"] {
+    min-width: 80px !important;
+    font-size: 11px !important;
+  }
+
+  /* Icon group row */
+  .icon-group {
+    justify-content: center !important;
+    gap: 20px !important;
+  }
+
+  /* Logo size */
+  .logo img {
+    height: 100px !important;
+  }
+
+  /* Prevent horizontal scroll globally */
+  body {
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  .section-spacing {
+    margin-top: 40px;
+    margin-bottom: 60px;
+  }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+  .nav-links {
+    gap: 10px !important;
+    font-size: 13px;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+  }
+
+  .logo img {
+    height: 80px !important;
+  }
+
+  .search-bar {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  .search-bar select {
+    width: 100% !important;
+    border-right: none !important;
+    border-bottom: 1px solid #ccc !important;
+    padding: 6px 8px !important;
+    height: 32px !important;
+  }
+
+  .search-bar input[type="text"] {
+    width: 100% !important;
+    padding: 6px 10px !important;
+  }
+}

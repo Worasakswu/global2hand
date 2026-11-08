@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <%- include('partials/common-head') %>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Global2Hand - Log In</title>
+  <link rel="stylesheet" href="/css/global.css" />
+  <link rel="stylesheet" href="/css/login.css" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Poppins:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+</head>
+
+<body>
+  <%- include('partials/header') %>
+    <main class="signup-container">
+      <div class="form-section">
+        <div class="form-header">
+          <h1>Log in to Global2Hand</h1>
+          <p>Enter your details below</p>
+        </div>
+
+        <form class="signup-form" action="/auth/admin-login" method="POST">
+          <div class="input-group">
+            <input type="text" name="username" placeholder="Username" />
+            <div class="underline"></div>
+          </div>
+          <div class="input-group">
+            <input type="password" name="password" placeholder="Password" />
+            <div class="underline"></div>
+          </div>
+
+          <button type="submit" class="btn-login" style="width: 100%; padding: 14px; font-size: 16px;">Log In</button>
+        </form>
+
+        <a href="/auth/google" class="btn-google"
+          style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px;padding:12px;border:1px solid #e0e0e0;border-radius:6px;text-decoration:none;color:#333;font-weight:500;">
+          <img src="/image/google.png" style="width:20px;height:20px;object-fit:contain;" />
+          Log in with Google
+        </a>
+
+
+      </div>
+    </main>
+
+    <%- include('partials/footer') %>
+</body>
+
+</html>

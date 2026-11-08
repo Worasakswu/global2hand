@@ -1,0 +1,425 @@
+/* --- Base Styles & Nav --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Poppins", sans-serif;
+  background: #fff;
+  color: #000;
+  overflow-x: hidden;
+}
+.container {
+  width: 1170px;
+  margin: 0 auto;
+}
+.section-spacing {
+  margin-top: 80px;
+  margin-bottom: 140px;
+}
+.divider {
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.3);
+  width: 100%;
+}
+
+/* Navigation Styles */
+.top-header {
+  background: #000;
+  color: #fff;
+  height: 48px;
+  display: flex;
+  align-items: center;
+}
+.top-header-content {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 230px;
+  font-size: 14px;
+}
+.promo a {
+  color: #fff;
+  font-weight: 600;
+  margin-left: 8px;
+}
+.lang-dropdown {
+  background: transparent;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+.lang-dropdown option {
+  color: #000;
+}
+
+.main-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 0 16px;
+}
+.logo {
+  font-family: "Inter";
+  font-weight: 700;
+  font-size: 24px;
+  letter-spacing: 0.03em;
+}
+.nav-links {
+  display: flex;
+  gap: 48px;
+  list-style: none;
+}
+.nav-links a {
+  text-decoration: none;
+  color: #000;
+  font-size: 16px;
+}
+.nav-links a:hover {
+  border-bottom: 1px solid #000;
+}
+
+.nav-icons {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.search-bar {
+  background: #f5f5f5;
+  padding: 7px 12px 7px 20px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+}
+.search-bar input {
+  border: none;
+  background: transparent;
+  outline: none;
+  width: 150px;
+  font-size: 12px;
+}
+.search-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.search-btn img {
+  width: 20px;
+  height: 20px;
+}
+.icon-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.nav-icon-img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+/* --- 1. Admin Common Section --- */
+.admin-section {
+  background: #fff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 40px;
+  border: 1px solid #f0f0f0;
+}
+
+.admin-header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #f5f5f5;
+  padding-bottom: 20px;
+}
+
+.admin-header-flex h2 {
+  font-size: 28px;
+  font-weight: 600;
+  color: #333;
+}
+
+.admin-header-flex p {
+  color: #666;
+  font-size: 14px;
+}
+
+/* --- 2. Admin Stats Summary --- */
+.category-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.stat-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border: 1px solid #f0f0f0;
+  transition: all 0.3s ease;
+  min-height: 110px;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  border-color: #db4444;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+}
+
+.stat-label {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.stat-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: #db4444;
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+}
+
+.stat-value small {
+  font-size: 14px;
+  color: #888;
+  font-weight: 400;
+}
+
+.stat-image-container {
+  width: 56px;
+  height: 56px;
+  background: #fdf2f2;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.stat-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* --- 3. Admin Product Section --- */
+.admin-products-section {
+  background: #fff;
+}
+
+
+/* --- 2. Admin Table --- */
+.admin-table-container {
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.admin-table th {
+  padding: 15px;
+  background: #f8f9fa;
+  color: #333;
+  font-weight: 600;
+  font-size: 14px;
+  border-bottom: 2px solid #eee;
+}
+
+.admin-table td {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  vertical-align: middle;
+  font-size: 14px;
+  color: #444;
+}
+
+.admin-table tr:hover {
+  background: #fafafa;
+}
+
+/* Thumbnail */
+.admin-prod-thumb {
+  width: 50px;
+  height: 50px;
+  background: #f5f5f5;
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-prod-thumb img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* Badge & Pills */
+.admin-badge {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.admin-badge.boosted {
+  background: #fff0f0;
+  color: #db4444;
+  border: 1px solid #db4444;
+}
+
+.admin-status-pill {
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.admin-status-pill.available {
+  background: #e6fcf5;
+  color: #0ca678;
+}
+
+.admin-status-pill.sold {
+  background: #fff5f5;
+  color: #c92a2a;
+  border: 1px solid #ffa8a8;
+}
+
+/* --- 3. Action Buttons --- */
+.action-btn-group {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-action {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  text-decoration: none;
+  border: 1px solid #eee;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.btn-action img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.btn-action:hover {
+  background: #f8f9fa;
+  border-color: #db4444;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.prod-name-main {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+/* Reusing Team management for styling if needed, but cleaned up for now */
+
+/* --- Footer Main Container --- */
+.main-footer {
+  background-color: #000000;
+  color: #ffffff;
+  padding-top: 80px;
+  padding-bottom: 24px;
+  margin-top: 60px; /* เว้นระยะห่างจากเนื้อหาด้านบน */
+}
+
+/* จัดเลย์เอาต์คอลัมน์ */
+.footer-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr; /* ให้คอลัมน์แรกกว้างกว่าเพื่อใส่ที่อยู่ */
+  gap: 80px;
+  margin-bottom: 60px;
+}
+
+.footer-col h3 {
+  font-family: "Poppins", sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 24px;
+}
+
+.footer-col p,
+.footer-col li {
+  font-size: 16px;
+  margin-bottom: 16px;
+  line-height: 24px;
+  list-style: none;
+}
+
+.footer-col a {
+  color: #ffffff;
+  text-decoration: none;
+  opacity: 0.8;
+  transition: 0.3s;
+}
+
+.footer-col a:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+/* --- ส่วนลิขสิทธิ์ด้านล่างสุด --- */
+.footer-bottom {
+  text-align: center;
+}
+
+.divider-footer {
+  height: 1px;
+  background-color: #ffffff;
+  opacity: 0.1; /* เส้นคั่นบางๆ ตามรูป */
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.footer-bottom p {
+  font-size: 16px;
+  color: #ffffff;
+  opacity: 0.4; /* ตัวหนังสือลิขสิทธิ์สีจางๆ ตามรูป */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+/* จัดการ Container ให้กว้างเท่ากับส่วนอื่นของเว็บ */
+.container {
+  width: 1170px;
+  margin: 0 auto;
+}

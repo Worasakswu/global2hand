@@ -1,0 +1,7 @@
+npm install 
+node seed.js 
+npm test --coverage      
+npm run profile:static
+npx jest tests/ui.test.js
+
+npm start 

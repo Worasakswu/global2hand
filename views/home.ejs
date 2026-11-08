@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <%- include('partials/common-head') %>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Global2Hand - แหล่งซื้อขายสินค้ามือสองคุณภาพดี ทั้งเสื้อผ้า อุปกรณ์อิเล็กทรอนิกส์ และอื่นๆ อีกมากมาย ในราคาประหยัด" />
+  <title>Global2Hand - HomePage</title>
+  <link rel="stylesheet" href="/css/global.css" />
+  <link rel="stylesheet" href="/css/home.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Kanit:wght@400;500;600;700;800&family=Poppins:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+</head>
+
+<body>
+  <%- include('partials/header') %>
+    <h1
+      style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;">
+      Global2Hand - แหล่งซื้อขายสินค้ามือสองคุณภาพดี</h1>
+
+    <section class="hero container">
+      <aside class="sidebar">
+        <ul>
+          <% categories.forEach(cat=> { %>
+            <li><a href="/items?category=<%= cat._id %>" style="text-decoration:none;color:inherit;display:block;">
+                <%= cat.name %>
+              </a></li>
+            <% }) %>
+        </ul>
+      </aside>
+      <div class="hero-banner"
+        style="position: relative; min-height: 400px; background: url('/image/hero-banner.png') center/cover no-repeat #f0f0f0; border-radius: 8px; overflow: hidden; display: flex; align-items: flex-start;">
+        <div class="banner-overlay"
+          style="position: relative; padding: 20px 40px; color: #333; max-width: 700px; display: flex; flex-direction: column; gap: 0px;">
+          <img src="/image/logo.png" alt="Global2Hand Logo"
+            style="height: 120px; width: fit-content; object-fit: contain; mix-blend-mode: multiply; margin-left: -10px; margin-top: -35px;">
+          <div style="margin-top: -10px; font-family: 'Kanit', sans-serif;">
+            <h2 style="font-size: 56px; font-weight: 700; line-height: 1.1; margin-bottom: 10px; color: #333;">
+              เว็ปเดียวจบ<br>ครบทุกการซื้อ</h2>
+            <p style="font-size: 24px; font-weight: 500; opacity: 0.9; color: #333;">ตลาดนัดซื้อออนไลน์มือสองครบวงจร</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="categories container section-spacing">
+      <div class="section-label">
+        <div class="red-rect"></div>
+        <span>Categories</span>
+      </div>
+      <h2>Browse By Category</h2>
+      <div class="cat-grid">
+        <% const iconMap={ 'Fashion' : 'fashion.png' , 'Music' : 'music.png' , 'Electronics' : 'Electronics.png'
+          , 'Home & Lifestyle' : 'Home & Lifestyle.png' , 'Bicycles' : 'bicycle.png' , 'Sports' : 'sports.png'
+          , "Baby's & Toys" : 'toys.png' , 'Pets' : 'Pets.png' , 'Collection' : 'Collection.png' }; %>
+          <% categories.forEach(cat=> { %>
+            <a href="/items?category=<%= cat._id %>" class="cat-item">
+              <img src="/image/<%= iconMap[cat.name] || 'Electronics.png' %>" alt="Category: <%= cat.name %>"
+                class="cat-icon" width="56" height="56" loading="lazy">
+              <span class="cat-name">
+                <%= cat.name %>
+              </span>
+            </a>
+            <% }) %>
+              <% if (categories.length===0) { %>
+                <p style="color:#999;">No categories available.</p>
+                <% } %>
+      </div>
+    </section>
+
+    <section class="recommend container section-spacing">
+      <div class="section-label">
+        <div class="red-rect"></div>
+        <span>Boosted products</span>
+      </div>
+      <div class="section-header">
+        <h2>Recommended</h2>
+        <div class="slider-arrows">
+          <button id="recommendPrev" aria-label="Previous Slide">←</button>
+          <button id="recommendNext" aria-label="Next Slide">→</button>
+        </div>
+      </div>
+
+      <div class="product-grid" id="recommendGrid">
+        <% if (recommendedProducts.length===0) { %>
+            <p style="color:#999;text-align:center;grid-column:1/-1;">No recommended products at the moment.</p>
+            <% } %>
+              <% recommendedProducts.forEach(product=> { %>
+                <div class="product-card boosted"> <!-- Added boosted class if needed for styling -->
+                  <div class="product-thumb">
+                    <div class="thumb-actions">
+                      <a href="/wishlist/add/<%= product._id %>" class="action-btn" aria-label="Add to wishlist">
+                        <img src="/image/heart-icon.png" alt="Add to wishlist" style="width: 20px;" loading="lazy">
+                      </a>
+                    </div>
+                    <% const mainImg=(product.images && product.images.length> 0) ? product.images[0] : (product.image
+                      || 'https://placehold.co/400x300?text=No+Photo'); %>
+                      <img src="<%= mainImg %>" alt="<%= product.name %>" width="270" height="250"
+                        onerror="this.onerror=null;this.src='https://placehold.co/400x300?text=No+Photo';"
+                        loading="lazy" style="object-fit: cover;" />
+                      <div class="thumb-actions-bottom"
+                        style="display:flex; gap:5px; align-items:center; justify-content:center; padding:10px 0;">
+                        <a href="/items/<%= product._id %>" class="view-item-btn"
+                          style="background:#f5f5f5; color:#333; text-decoration:none; padding:5px 10px; border-radius:4px; font-size:12px; font-weight:500; border:1px solid #ddd;">View
+                          Detail</a>
+                      </div>
+                  </div>
+                  <div class="product-content-details" style="padding: 10px 0;">
+                    <div style="display: flex; gap: 5px; margin-bottom: 5px;">
+                      <span class="category-badge"
+                        style="font-size: 10px; background: #f5f5f5; color: #666; padding: 2px 8px; border-radius: 10px; text-transform: uppercase;">
+                        <%= product.category ? product.category.name : 'Other' %>
+                      </span>
+                    </div>
+                    <h4 style="margin: 0 0 5px 0; font-size: 16px; font-weight: 600; color: #333;">
+                      <%= product.name %>
+                    </h4>
+                    <div class="seller-line" style="display: flex; align-items: center; gap: 5px; margin-bottom: 8px;">
+                      <span style="font-size: 12px; color: #999;">Seller: <%= product.seller ? product.seller.name
+                          : 'Guest' %></span>
+                    </div>
+                    <div class="price-row" style="display: flex; align-items: center; gap: 8px;">
+                      <span class="new-price" style="margin: 0; color: #db4444; font-weight: 700; font-size: 18px;">฿<%=
+                          product.price.toLocaleString() %></span>
+                      <% if (product.isRecommended) { %>
+                        <span class="boost-badge"
+                          style="background:#db4444; color:white; font-size:10px; font-weight: 500; padding:3px 6px; border-radius:4px; line-height: 1;">Recommended</span>
+                        <% } %>
+                    </div>
+                    <% if (product.province || (product.seller && product.seller.province)) { %>
+                      <small style="color:#bbb;font-size:11px; margin-top: 5px; display: block;">📍 <%= product.province
+                          || product.seller.province %></small>
+                      <% } %>
+                  </div>
+                </div>
+                <% }) %>
+      </div>
+    </section>
+
+    <section class="all-products container section-spacing">
+      <div class="section-label">
+        <div class="red-rect"></div>
+        <span>Explore Our Catalog</span>
+      </div>
+      <div class="section-header">
+        <h2>All Products</h2>
+        <button class="btn-red-small" onclick="location.href='/items'">View All</button>
+      </div>
+
+      <div class="product-grid">
+        <% if (products.length===0) { %>
+          <p style="color:#999;text-align:center;grid-column:1/-1;">No products added yet.</p>
+          <% } %>
+            <% products.forEach(product=> { %>
+              <div class="product-card">
+                <div class="product-thumb">
+                  <div class="thumb-actions">
+                    <a href="/wishlist/add/<%= product._id %>" class="action-btn">
+                      <img src="/image/heart-icon.png" alt="wishlist" style="width: 20px;">
+                    </a>
+                  </div>
+                  <% const mainImgNormal=(product.images && product.images.length> 0) ? product.images[0] :
+                    (product.image || 'https://placehold.co/400x300?text=No+Photo'); %>
+                    <img src="<%= mainImgNormal %>" alt="<%= product.name %>" width="270" height="250"
+                      onerror="this.onerror=null;this.src='https://placehold.co/400x300?text=No+Photo';" loading="lazy"
+                      style="object-fit: cover;" />
+                    <div class="thumb-actions-bottom">
+                      <a href="/items/<%= product._id %>" class="view-item-btn">View Detail</a>
+                    </div>
+                </div>
+                <div class="product-content-details" style="padding: 10px 0;">
+                  <div style="display: flex; gap: 5px; margin-bottom: 5px;">
+                    <span class="category-badge"
+                      style="font-size: 10px; background: #f5f5f5; color: #666; padding: 2px 8px; border-radius: 10px; text-transform: uppercase;">
+                      <%= product.category ? product.category.name : 'Other' %>
+                    </span>
+                  </div>
+                  <h4 style="margin: 0 0 5px 0; font-size: 16px; font-weight: 600; color: #333;">
+                    <%= product.name %>
+                  </h4>
+                  <div class="seller-line" style="display: flex; align-items: center; gap: 5px; margin-bottom: 8px;">
+                    <span style="font-size: 12px; color: #999;">Seller: <%= product.seller ? product.seller.name
+                        : 'Guest' %></span>
+                  </div>
+                  <div class="price-row" style="display: flex; align-items: center; gap: 8px;">
+                    <span class="new-price" style="margin: 0; color: #db4444; font-weight: 700; font-size: 18px;">฿<%=
+                        product.price.toLocaleString() %></span>
+                    <% if (product.isRecommended) { %>
+                      <span class="boost-badge"
+                        style="background:#db4444; color:white; font-size:10px; font-weight: 500; padding:3px 6px; border-radius:4px; line-height: 1;">Recommended</span>
+                      <% } %>
+                  </div>
+                  <% if (product.province || (product.seller && product.seller.province)) { %>
+                    <small style="color:#bbb;font-size:11px; margin-top: 5px; display: block;">📍 <%= product.province
+                        || product.seller.province %></small>
+                    <% } %>
+                </div>
+              </div>
+              <% }) %>
+      </div>
+
+
+    </section>
+
+    <section class="faq-container container section-spacing">
+      <div class="section-label">
+        <div class="red-rect"></div>
+        <span>FAQ</span>
+      </div>
+
+      <div class="faq-content">
+        <div class="faq-group">
+          <h2 class="faq-header"><span>›</span> For Buyers</h2>
+          <div class="faq-item">
+            <h4>How can I find products in my area?</h4>
+            <p>
+              Use our smart search bar! select your **Province** from the dropdown to find amazing deals right in your
+              local area.
+            </p>
+          </div>
+          <div class="faq-item">
+            <h4>How do I contact the seller?</h4>
+            <p>
+              Simply click **"View Detail"** on any product. You will see the seller's name and contact options to start
+              a deal.
+            </p>
+          </div>
+          <div class="faq-item">
+            <h4>Are the sellers verified?</h4>
+            <p>
+              Yes, all our users sign in through Google. You can check the seller's membership duration on the product
+              page.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-group">
+          <h2 class="faq-header"><span>›</span> For Sellers</h2>
+          <div class="faq-item">
+            <h4>How do I sell my items faster?</h4>
+            <p>
+              Try our **Boost Post** feature for only **20 THB**! Your product will be featured in the "Today's
+              Recommend" section at the top.
+            </p>
+          </div>
+          <div class="faq-item">
+            <h4>Is there a fee for listing products?</h4>
+            <p>
+              Listing is **100% Free**! We only charge a small fee if you choose to boost your item for better
+              visibility.
+            </p>
+          </div>
+          <div class="faq-item">
+            <h4>What can I sell on Global2Hand?</h4>
+            <p>
+              You can sell almost any second-hand items, from Electronics and Fashion to Bicycles and Pets!
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <a href="#" class="back-to-top">↑</a>
+
+    <%- include('partials/footer') %>
+      <script>
+        const rangeInput = document.getElementById("priceRange");
+        const trackFill = document.getElementById("trackFill");
+        const priceTooltip = document.getElementById("priceTooltip");
+        const minInput = document.getElementById("minInput");
+        const maxInput = document.getElementById("maxInput");
+        const priceSearchBtn = document.getElementById("priceSearchBtn");
+
+        // --- Recommended Slider Logic ---
+        const recommendGrid = document.getElementById("recommendGrid");
+        const recommendPrev = document.getElementById("recommendPrev");
+        const recommendNext = document.getElementById("recommendNext");
+
+        if (recommendGrid && recommendPrev && recommendNext) {
+          recommendNext.addEventListener("click", () => {
+            // Scroll by one card width + gap (approx 300px)
+            recommendGrid.scrollBy({ left: 300, behavior: "smooth" });
+          });
+
+          recommendPrev.addEventListener("click", () => {
+            recommendGrid.scrollBy({ left: -300, behavior: "smooth" });
+          });
+        }
+      </script>
+</body>
+
+</html>

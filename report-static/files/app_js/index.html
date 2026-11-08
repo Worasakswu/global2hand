@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Plato - app.js</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="../../assets/css/vendor/morris.css" rel="stylesheet" type="text/css">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet" type="text/css">
+  <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet" type="text/css">
+  <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet" type="text/css">
+  <link href="../../assets/css/plato.css" rel="stylesheet" type="text/css">
+  <link href="../../assets/css/plato-file.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="https://github.com/the-simian/es6-plato">ES6 Plato on Github</a>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="../../index.html">Report Home</a>
+      </li>
+      <li class="active">
+        <a href="display.html">Summary Display</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>app.js</h1>
+  </div>
+</div>
+
+<div class="container aggregate-stats">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
+      <p class="stat">64.09</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
+      <p class="stat">168</p>
+    </div>
+  </div>
+  <div class="row historical">
+    <div class="col-md-6">
+      <p id="chart_historical_maint" class="chart"></p>
+    </div>
+    <div class="col-md-6">
+      <p id="chart_historical_sloc" class="chart"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
+      <p class="stat">25.19</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
+      <p class="stat">1.81</p>
+    </div>
+  </div>
+</div>
+
+<div class="container charts">
+  <div class="row">
+    <h2 class="header">Function weight</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity" data-container="body"></i></a></h3>
+      <div id="fn-by-complexity" class="stat"></div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h3>
+      <div id="fn-by-sloc" class="stat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <textarea id="file-source" class="col-md-12">const express = require(&#039;express&#039;);
+const path = require(&#039;path&#039;);
+const mongoose = require(&#039;mongoose&#039;);
+const passport = require(&#039;passport&#039;);
+const session = require(&#039;express-session&#039;);
+const methodOverride = require(&#039;method-override&#039;);
+require(&#039;dotenv&#039;).config();
+
+// Config and Passport
+const connectDB = require(&#039;./config/db&#039;);
+require(&#039;./config/passport&#039;)(passport);
+
+// Import Models Early (Important for Mongoose Populates)
+const User = require(&#039;./models/User&#039;);
+const Item = require(&#039;./models/Item&#039;);
+const Category = require(&#039;./models/Category&#039;);
+
+// Start Express
+const app = express();
+
+// 1. Connect to MongoDB Atlas
+connectDB();
+
+// 2. Set Template Engine (EJS) 
+app.set(&#039;view engine&#039;, &#039;ejs&#039;);
+app.set(&#039;views&#039;, path.join(__dirname, &#039;views&#039;));
+
+// 3. Basic Middlewares
+app.use(express.urlencoded({ extended: true })); // Read data from form
+app.use(express.json()); // Read JSON data
+app.use(methodOverride(&#039;_method&#039;)); // Enable form to send PUT/DELETE
+app.use(express.static(path.join(__dirname, &#039;public&#039;))); // Folder for CSS/JS/Images
+
+
+// 4. Session
+app.use(session({
+    secret: process.env.SESSION_SECRET || &#039;global2hand_secret&#039;,
+    resave: false,
+    saveUninitialized: false
+}));
+
+// 5. Passport (Google Auth)
+app.use(passport.initialize());
+app.use(passport.session());
+
+// 6. Set Global Variables
+app.use(require(&#039;./middlewares/variables&#039;));
+
+// 7. Import Routes
+app.use(&#039;/auth&#039;, require(&#039;./routes/auth&#039;));
+app.use(&#039;/items&#039;, require(&#039;./routes/items&#039;));
+app.use(&#039;/categories&#039;, require(&#039;./routes/categories&#039;));
+
+// Home Page (Use the same Controller as items)
+const itemController = require(&#039;./controllers/itemController&#039;);
+const { ensureAuth } = require(&#039;./middlewares/authMiddleware&#039;);
+
+app.get(&#039;/&#039;, itemController.getHomePage);
+
+// Health Check for Render/Deployment
+app.get(&#039;/health&#039;, (req, res) =&gt; res.status(200).send(&#039;OK&#039;));
+
+// Static Pages Routes
+app.get(&#039;/contact&#039;, (req, res) =&gt; res.render(&#039;contact&#039;, { pageTitle: &#039;Contact - Global2Hand&#039; }));
+app.get(&#039;/account&#039;, ensureAuth, async (req, res) =&gt; {
+    try {
+        const myProducts = await Item.find({ seller: req.user._id }).populate(&#039;category&#039;);
+        res.render(&#039;account&#039;, {
+            pageTitle: &#039;My Account - Global2Hand&#039;,
+            products: myProducts || []
+        });
+    } catch (err) {
+        console.error(&#039;Account page error:&#039;, err);
+        res.render(&#039;account&#039;, { pageTitle: &#039;My Account - Global2Hand&#039;, products: [] });
+    }
+});
+app.post(&#039;/account&#039;, ensureAuth, async (req, res) =&gt; {
+    try {
+        const User = require(&#039;./models/User&#039;);
+        const { firstName, lastName, address, province } = req.body;
+        const userId = req.user ? req.user._id : null;
+        if (!userId) {
+            return res.redirect(&#039;/account&#039;);
+        }
+        await User.findByIdAndUpdate(userId, {
+            firstName: firstName || &#039;&#039;,
+            lastName: lastName || &#039;&#039;,
+            name: [firstName, lastName].filter(Boolean).join(&#039; &#039;) || req.user.name,
+            address: address || &#039;&#039;,
+            province: province || &#039;&#039;
+        });
+        res.redirect(&#039;/account&#039;);
+    } catch (err) {
+        console.error(&#039;Account update error:&#039;, err);
+        res.redirect(&#039;/account&#039;);
+    }
+});
+// 7.5 Wishlist Routes
+console.log(&#039;Mounting Wishlist Routes...&#039;);
+app.get(&#039;/wishlist&#039;, ensureAuth, async (req, res) =&gt; {
+    try {
+        const userWithWishlist = await User.findById(req.user._id).populate(&#039;wishlist&#039;);
+        if (!userWithWishlist) {
+            return res.redirect(&#039;/&#039;);
+        }
+        res.render(&#039;wishlist&#039;, {
+            pageTitle: &#039;Wishlist - Global2Hand&#039;,
+            products: userWithWishlist.wishlist || [],
+            user: userWithWishlist
+        });
+    } catch (err) {
+        console.error(&#039;Wishlist error:&#039;, err);
+        res.redirect(&#039;/&#039;);
+    }
+});
+
+app.get(&#039;/wishlist/add/:id&#039;, ensureAuth, async (req, res) =&gt; {
+    console.log(&#039;Adding to wishlist:&#039;, req.params.id);
+    try {
+        await User.findByIdAndUpdate(req.user._id, {
+            $addToSet: { wishlist: req.params.id }
+        });
+        console.log(&#039;Success adding item to wishlist&#039;);
+        res.redirect(&#039;back&#039;);
+    } catch (err) {
+        console.error(&#039;Wishlist Add error:&#039;, err);
+        res.redirect(&#039;back&#039;);
+    }
+});
+
+app.post(&#039;/wishlist/remove/:id&#039;, ensureAuth, async (req, res) =&gt; {
+    try {
+        await User.findByIdAndUpdate(req.user._id, {
+            $pull: { wishlist: req.params.id }
+        });
+        res.redirect(&#039;/wishlist&#039;);
+    } catch (err) {
+        res.redirect(&#039;/wishlist&#039;);
+    }
+});
+
+// Item Status Update (Sold Out)
+app.post(&#039;/items/status/:id&#039;, ensureAuth, async (req, res) =&gt; {
+    try {
+        const Item = require(&#039;./models/Item&#039;);
+        const { status } = req.body;
+        // Verify ownership
+        const item = await Item.findById(req.params.id);
+        if (!item || item.seller.toString() !== req.user._id.toString()) {
+            return res.redirect(&#039;/account&#039;);
+        }
+        await Item.findByIdAndUpdate(req.params.id, { status: status || &#039;Sold&#039; });
+        res.redirect(&#039;/account&#039;);
+    } catch (err) {
+        console.error(&#039;Status update error:&#039;, err);
+        res.redirect(&#039;/account&#039;);
+    }
+});
+
+// Set Port and Start Server
+const PORT = process.env.PORT || 10000; // Default to 10000 for Render
+if (process.env.NODE_ENV !== &#039;test&#039;) {
+    app.listen(PORT, &#039;0.0.0.0&#039;, () =&gt; {
+        console.log(`Server is running on port ${PORT}`);
+    });
+}
+
+module.exports = app;</textarea>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>.</p>
+  </div>
+</footer>
+
+<script type="text/html" id="complexity-popover-template">
+  <div class="complexity-notice">
+    Complexity : {{ complexity.cyclomatic }} <br>
+    Length : {{ complexity.halstead.length }} <br>
+    Difficulty : {{ complexity.halstead.difficulty.toFixed(2) }} <br>
+    Est # bugs : {{ complexity.halstead.bugs.toFixed(2) }}<br>
+  </div>
+</script>
+
+<script type="text/javascript" src="../../assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bundles/codemirror.js"></script>
+<script type="text/javascript" src="../../assets/scripts/codemirror.markpopovertext.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="../../assets/scripts/plato-file.js"></script>
+</body>
+</html>

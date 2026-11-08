@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <%- include('partials/common-head') %>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description"
+      content="Global2Hand - แหล่งซื้อขายสินค้ามือสองคุณภาพดี ทั้งเสื้อผ้า อุปกรณ์อิเล็กทรอนิกส์ และอื่นๆ อีกมากมาย ในราคาประหยัด" />
+    <title>Global2Hand - Catalog</title>
+    <link rel="stylesheet" href="/css/global.css" />
+    <link rel="stylesheet" href="/css/home.css" />
+</head>
+
+<body>
+  <%- include('partials/header') %>
+    <h1
+      style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;">
+      Global2Hand - แหล่งซื้อขายสินค้ามือสองคุณภาพดี</h1>
+
+
+    <main class="container section-spacing" style="padding-top: 40px;">
+      <nav class="breadcrumb" style="margin-bottom: 20px;">Home / <span>Catalog</span></nav>
+      <section class="categories container section-spacing">
+        <div class="section-label">
+          <div class="red-rect"></div>
+          <span>Categories</span>
+        </div>
+        <h2 class="price-title">Browse By Category</h2>
+
+        <div class="cat-grid">
+          <% const iconMap={ 'Fashion' : 'fashion.png' , 'Music' : 'music.png' , 'Electronics' : 'Electronics.png'
+            , 'Home & Lifestyle' : 'Home & Lifestyle.png' , 'Bicycles' : 'bicycle.png' , 'Sports' : 'sports.png'
+            , "Baby's & Toys" : 'toys.png' , 'Pets' : 'Pets.png' , 'Collection' : 'Collection.png' }; %>
+            <% categories.forEach(cat=> { %>
+              <a href="/items?category=<%= cat._id %>" class="cat-item">
+                <img src="/image/<%= iconMap[cat.name] || 'Electronics.png' %>" alt="Category: <%= cat.name %>"
+                  class="cat-icon" width="56" height="56" loading="lazy">
+                <span class="cat-name">
+                  <%= cat.name %>
+                </span>
+              </a>
+              <% }) %>
+                <% if (categories.length===0) { %>
+                  <p style="color:#999;">No categories available.</p>
+                  <% } %>
+        </div>
+      </section>
+      <section class="price-filter container section-spacing">
+        <div class="section-label">
+          <div class="red-rect"></div>
+          <span>Filter</span>
+        </div>
+        <h2 class="price-title">Price range</h2>
+
+        <div class="price-filter-card">
+          <div class="slider-full-wrapper">
+            <div class="price-tooltip-blue" id="priceTooltip" style="left: 20%">
+              ฿<%= query.maxPrice || 1000 %>
+            </div>
+
+            <div class="slider-track-base">
+              <div class="slider-track-fill" id="trackFill" style="width: 20%"></div>
+              <input type="range" class="custom-range" min="0" max="1000000" value="<%= query.maxPrice || 1000 %>"
+                id="priceRange" />
+            </div>
+
+            <div class="slider-labels">
+              <span>฿0</span>
+              <span>฿1,000,000</span>
+            </div>
+          </div>
+
+          <div class="price-input-group">
+            <div class="input-with-symbol">
+              <span>฿</span>
+              <input type="number" value="<%= query.minPrice || 0 %>" id="minInput" placeholder="Min" />
+            </div>
+            <span class="dash-separator">-</span>
+            <div class="input-with-symbol">
+              <span>฿</span>
+              <input type="number" value="<%= query.maxPrice || 1000 %>" id="maxInput" placeholder="Max" />
+            </div>
+          </div>
+          <button class="btn-search-red" id="priceSearchBtn">Search Now</button>
+        </div>
+      </section>
+      <section class="all-products section-spacing">
+        <div class="section-label">
+          <div class="red-rect"></div>
+          <span>Shop</span>
+        </div>
+          <h2 class="price-title">All Products</h2>
+
+
+        <div class="catalog-grid">
+
+          <% if (products.length===0) { %>
+            <p style="color:#999;text-align:center;grid-column:1/-1;">No products added yet.</p>
+            <% } %>
+              <% products.forEach(product=> { %>
+                <div class="product-card">
+                  <div class="product-thumb">
+                    <div class="thumb-actions">
+                      <a href="/wishlist/add/<%= product._id %>" class="action-btn">
+                        <img src="/image/heart-icon.png" alt="wishlist" style="width: 20px;">
+                      </a>
+                    </div>
+                    <% const mainImgNormal=(product.images && product.images.length> 0) ? product.images[0] :
+                      (product.image || 'https://placehold.co/400x300?text=No+Photo'); %>
+                      <img src="<%= mainImgNormal %>" alt="<%= product.name %>" width="270" height="250"
+                        onerror="this.onerror=null;this.src='https://placehold.co/400x300?text=No+Photo';"
+                        loading="lazy" style="object-fit: cover;" />
+                      <div class="thumb-actions-bottom">
+                        <a href="/items/<%= product._id %>" class="view-item-btn">View Detail</a>
+                      </div>
+                  </div>
+                  <div class="product-content-details" style="padding: 10px 0;">
+                    <div style="display: flex; gap: 5px; margin-bottom: 5px;">
+                      <span class="category-badge"
+                        style="font-size: 10px; background: #f5f5f5; color: #666; padding: 2px 8px; border-radius: 10px; text-transform: uppercase;">
+                        <%= product.category ? product.category.name : 'Other' %>
+                      </span>
+                    </div>
+                    <h4 style="margin: 0 0 5px 0; font-size: 16px; font-weight: 600; color: #333;">
+                      <%= product.name %>
+                    </h4>
+                    <div class="seller-line" style="display: flex; align-items: center; gap: 5px; margin-bottom: 8px;">
+                      <span style="font-size: 12px; color: #999;">Seller: <%= product.seller ? product.seller.name
+                          : 'Guest' %></span>
+                    </div>
+                    <div class="price-row" style="display: flex; align-items: center; gap: 8px;">
+                      <span class="new-price" style="margin: 0; color: #db4444; font-weight: 700; font-size: 18px;">฿<%=
+                          product.price.toLocaleString() %></span>
+                      <% if (product.isRecommended) { %>
+                        <span class="boost-badge"
+                          style="background:#db4444; color:white; font-size:10px; font-weight: 500; padding:3px 6px; border-radius:4px; line-height: 1;">Recommended</span>
+                        <% } %>
+                    </div>
+                    <% if (product.province || (product.seller && product.seller.province)) { %>
+                      <small style="color:#bbb;font-size:11px; margin-top: 5px; display: block;">📍 <%= product.province
+                          || product.seller.province %></small>
+                      <% } %>
+                  </div>
+                </div>
+                <% }) %>
+        </div>
+
+        <!-- Pagination UI -->
+        <% if (totalPages > 1) { %>
+        <div class="pagination" style="display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 50px;">
+          <% 
+            const buildUrl = (p) => {
+              const params = new URLSearchParams(query);
+              params.set('page', p);
+              return `/items?${params.toString()}`;
+            };
+          %>
+          
+          <% if (currentPage > 1) { %>
+            <a href="<%= buildUrl(currentPage - 1) %>" style="text-decoration: none; padding: 8px 16px; background: #f5f5f5; border-radius: 4px; color: #333;">&larr; Prev</a>
+          <% } %>
+
+          <% for(let i = 1; i <= totalPages; i++) { %>
+            <a href="<%= buildUrl(i) %>" 
+               style="text-decoration: none; padding: 8px 16px; <%= currentPage === i ? 'background: #db4444; color: #fff;' : 'background: #f5f5f5; color: #333;' %> border-radius: 4px;">
+               <%= i %>
+            </a>
+          <% } %>
+
+          <% if (currentPage < totalPages) { %>
+            <a href="<%= buildUrl(currentPage + 1) %>" style="text-decoration: none; padding: 8px 16px; background: #f5f5f5; border-radius: 4px; color: #333;">Next &rarr;</a>
+          <% } %>
+        </div>
+        <% } %>
+
+      </section>
+    </main>
+
+    <a href="#" class="back-to-top">↑</a>
+    <%- include('partials/footer') %>
+
+      <script>
+        const rangeInput = document.getElementById("priceRange");
+        const trackFill = document.getElementById("trackFill");
+        const priceTooltip = document.getElementById("priceTooltip");
+        const minInput = document.getElementById("minInput");
+        const maxInput = document.getElementById("maxInput");
+        const priceSearchBtn = document.getElementById("priceSearchBtn");
+
+        function updateSlider() {
+          const val = rangeInput.value;
+          const min = rangeInput.min || 0;
+          const max = rangeInput.max || 1000000;
+
+          // Calculate percentage
+          const percent = ((val - min) / (max - min)) * 100;
+
+          trackFill.style.width = percent + "%";
+          priceTooltip.style.left = percent + "%";
+          priceTooltip.innerText = "฿" + Number(val).toLocaleString();
+
+          maxInput.value = val;
+        }
+
+        rangeInput.addEventListener("input", updateSlider);
+
+        // Manual input updates responsiveness
+        maxInput.addEventListener("input", () => {
+          rangeInput.value = maxInput.value;
+          const val = rangeInput.value;
+          const min = rangeInput.min || 0;
+          const max = rangeInput.max || 1000000;
+          const percent = ((val - min) / (max - min)) * 100;
+          trackFill.style.width = percent + "%";
+          priceTooltip.style.left = percent + "%";
+          priceTooltip.innerText = "฿" + Number(val).toLocaleString();
+        });
+
+        minInput.addEventListener("input", () => {
+          // Just let it be, search button will pick it up
+        });
+
+        // Execute real search
+        priceSearchBtn.addEventListener("click", () => {
+          const min = minInput.value || 0;
+          const max = maxInput.value || 1000000;
+          // Keep other filters? (category etc.)
+          const urlParams = new URLSearchParams(window.location.search);
+          urlParams.set('minPrice', min);
+          urlParams.set('maxPrice', max);
+          window.location.href = `/items?${urlParams.toString()}`;
+        });
+
+        updateSlider();
+      </script>
+</body>
+
+</html>

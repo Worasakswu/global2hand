@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Plato - controllers/itemController.js</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="../../assets/css/vendor/morris.css" rel="stylesheet" type="text/css">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet" type="text/css">
+  <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet" type="text/css">
+  <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet" type="text/css">
+  <link href="../../assets/css/plato.css" rel="stylesheet" type="text/css">
+  <link href="../../assets/css/plato-file.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="https://github.com/the-simian/es6-plato">ES6 Plato on Github</a>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="../../index.html">Report Home</a>
+      </li>
+      <li class="active">
+        <a href="display.html">Summary Display</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>controllers/itemController.js</h1>
+  </div>
+</div>
+
+<div class="container aggregate-stats">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
+      <p class="stat">57.84</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
+      <p class="stat">141</p>
+    </div>
+  </div>
+  <div class="row historical">
+    <div class="col-md-6">
+      <p id="chart_historical_maint" class="chart"></p>
+    </div>
+    <div class="col-md-6">
+      <p id="chart_historical_sloc" class="chart"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
+      <p class="stat">35.27</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
+      <p class="stat">1.47</p>
+    </div>
+  </div>
+</div>
+
+<div class="container charts">
+  <div class="row">
+    <h2 class="header">Function weight</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity" data-container="body"></i></a></h3>
+      <div id="fn-by-complexity" class="stat"></div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h3>
+      <div id="fn-by-sloc" class="stat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <textarea id="file-source" class="col-md-12">const Item = require(&#039;../models/Item&#039;);
+const Category = require(&#039;../models/Category&#039;);
+
+// Display Home Page
+exports.getHomePage = async (req, res) =&gt; {
+    try {
+        // Fetch up to 12 items for home page display
+        let items = await Item.find({ status: &#039;Available&#039; }).limit(12).populate(&#039;seller&#039;).populate(&#039;category&#039;);
+        const categories = await Category.find();
+        
+        res.render(&#039;home&#039;, {
+            products: items,
+            categories,
+            query: {}, // No search query on home load
+            pageTitle: &#039;Global2Hand - Home&#039;
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send(&#039;Server Error&#039;);
+    }
+};
+
+//  Display all items , Search (Search/Filter) for Catalog Page
+exports.getAllItems = async (req, res) =&gt; {
+    try {
+        let { keyword, category, minPrice, maxPrice, province, tags } = req.query;
+        if (keyword) keyword = keyword.trim();
+        let query = { status: &#039;Available&#039; };
+
+        // 1. Search Keyword (Name, Description, or Tags)
+        if (keyword) {
+            query.$or = [
+                { name: { $regex: keyword, $options: &#039;i&#039; } },
+                { description: { $regex: keyword, $options: &#039;i&#039; } },
+                { tags: { $regex: keyword, $options: &#039;i&#039; } }
+            ];
+        }
+        // 2. Category
+        if (category) query.category = category;
+        // 3. Price Range
+        if (minPrice || maxPrice) {
+            query.price = {};
+            if (minPrice) query.price.$gte = Number(minPrice);
+            if (maxPrice) query.price.$lte = Number(maxPrice);
+        }
+        // 4. Tags (Search from Array)
+        if (tags) query.tags = { $in: tags.split(&#039;,&#039;).map(t =&gt; t.trim()) };
+        // 5. Province
+        if (province) query.province = province;
+
+        // Get item data with seller and category
+        let items = await Item.find(query).populate(&#039;seller&#039;).populate(&#039;category&#039;);
+
+        const categories = await Category.find();
+        res.render(&#039;catalog&#039;, {
+            products: items,
+            categories,
+            query: req.query,
+            pageTitle: &#039;Global2Hand - Catalog&#039;
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send(&#039;Server Error&#039;);
+    }
+};
+
+// Add item form 
+exports.getAddItem = async (req, res) =&gt; {
+    try {
+        const categories = await Category.find();
+        res.render(&#039;selling&#039;, { categories, pageTitle: &#039;Add Item&#039; });
+    } catch (err) {
+        console.error(&#039;Error loading Selling page:&#039;, err);
+        res.status(500).send(`
+            &lt;h1&gt;Internal Server Error&lt;/h1&gt;
+            &lt;p&gt;ระบบมีปัญหาในการโหลดหน้าลงขายสินค้า (ไม่สามารถดึงหมวดหมู่ได้)&lt;/p&gt;
+            &lt;p&gt;Error: ${err.message}&lt;/p&gt;
+            &lt;a href=&quot;/&quot;&gt;กลับไปหน้าแรก&lt;/a&gt;
+        `);
+    }
+};
+
+//  Save new item (with image upload to Cloudinary) 
+exports.createItem = async (req, res) =&gt; {
+    try {
+        const { name, price, description, category, tags, province, phone, isRecommended } = req.body;
+        const newItem = new Item({
+            name,
+            price,
+            description,
+            category,
+            tags: Array.isArray(tags) ? tags : (tags ? [tags] : []), // Handle Checkbox Array or String
+            province,
+            phone,
+            isRecommended: isRecommended === &#039;true&#039;, // Handle checkbox value
+            images: req.files ? req.files.map(f =&gt; f.path || f.url || f.secure_url) : [], // Handle multiple uploads
+            seller: req.user._id // ID from Google Login
+        });
+        await newItem.save();
+        res.redirect(&#039;/&#039;);
+    } catch (err) {
+        console.error(err);
+        res.status(400).send(`
+            &lt;h1&gt;Failed to add product&lt;/h1&gt;
+            &lt;pre&gt;${err.message}&lt;/pre&gt;
+            &lt;a href=&quot;/items/add&quot;&gt;Go back and try again&lt;/a&gt;
+        `);
+    }
+};
+
+// Get single item detail
+exports.getItemById = async (req, res) =&gt; {
+    try {
+        const item = await Item.findById(req.params.id).populate(&#039;seller&#039;).populate(&#039;category&#039;);
+        if (!item) return res.status(404).send(&#039;Item not found&#039;);
+        
+        res.render(&#039;product&#039;, { product: item, pageTitle: item.name });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send(&#039;Server Error&#039;);
+    }
+};
+
+//  Delete item (Only owner can delete) 
+exports.deleteItem = async (req, res) =&gt; {
+    try {
+        const item = await Item.findById(req.params.id);
+        if (!item) return res.status(404).send(&#039;Item not found&#039;);
+
+        // Check ownership OR Check Admin role
+        if (item.seller.toString() !== req.user._id.toString() &amp;&amp; req.user.role !== &#039;admin&#039;) {
+            return res.status(403).send(&#039;คุณไม่มีสิทธิ์ลบสินค้านี้ (Not authorized)&#039;);
+        }
+
+        await Item.findByIdAndDelete(req.params.id);
+        res.redirect(&#039;back&#039;);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send(&#039;Server Error&#039;);
+    }
+};</textarea>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>.</p>
+  </div>
+</footer>
+
+<script type="text/html" id="complexity-popover-template">
+  <div class="complexity-notice">
+    Complexity : {{ complexity.cyclomatic }} <br>
+    Length : {{ complexity.halstead.length }} <br>
+    Difficulty : {{ complexity.halstead.difficulty.toFixed(2) }} <br>
+    Est # bugs : {{ complexity.halstead.bugs.toFixed(2) }}<br>
+  </div>
+</script>
+
+<script type="text/javascript" src="../../assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bundles/codemirror.js"></script>
+<script type="text/javascript" src="../../assets/scripts/codemirror.markpopovertext.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="../../assets/scripts/plato-file.js"></script>
+</body>
+</html>

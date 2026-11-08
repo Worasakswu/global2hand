@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <%- include('partials/common-head') %>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Global2Hand - My Account</title>
+  <link rel="stylesheet" href="/css/account.css" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+</head>
+
+<body>
+    <%- include('partials/header') %>
+
+  <main class="container account-page">
+    <div class="account-header">
+      <nav class="breadcrumb">
+        <span class="fade">Home</span> / <span>My Account</span>
+      </nav>
+      <div class="welcome-msg">
+        Welcome! <span class="highlight">
+          <%= user ? user.name : 'Guest' %>
+        </span>
+      </div>
+    </div>
+    <div class="account-layout">
+      <aside class="account-sidebar">
+        <div class="sidebar-group">
+          <h4>Manage My Account</h4>
+          <ul id="sidebar-menu">
+            <li class="active menu-item" onclick="toggleActive(this, '#profile')">My Profile</li>
+            <li class="menu-item" onclick="toggleActive(this, '#my-listings')">My Listings</li>
+          </ul>
+        </div>
+        
+        <script>
+          function toggleActive(element, target) {
+            // Remove active from all items in this menu
+            document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
+            // Add active to current
+            element.classList.add('active');
+            // Navigate
+            location.href = target;
+          }
+        </script>
+
+        <% if (user && user.role === 'admin') { %>
+          <div class="sidebar-group">
+            <h4 style="color: #db4444;">Admin Panel</h4>
+            <ul>
+              <li><a href="/categories/dashboard" style="text-decoration: none; color: inherit; font-weight: 500;">Dashboard</a></li>
+            </ul>
+          </div>
+        <% } %>
+      </aside>
+      <section class="account-content-area" style="flex: 1; display: flex; flex-direction: column; gap: 40px;">
+        <!-- Edit Profile Section -->
+        <div id="profile" class="edit-profile-card" style="padding: 40px; background: #fff; box-shadow: 0px 1px 13px rgba(0,0,0,0.05); border-radius: 4px;">
+        <h2>Edit Your Profile</h2>
+        <form class="profile-form" action="/account" method="POST">
+          <div class="form-row">
+            <div class="input-box">
+              <label>First Name</label>
+              <input type="text" name="firstName" value="<%= user && user.firstName ? user.firstName : (user ? user.name : '') %>" placeholder="First Name" />
+            </div>
+            <div class="input-box">
+              <label>Last Name</label>
+              <input type="text" name="lastName" value="<%= user && user.lastName ? user.lastName : '' %>" placeholder="Last Name" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="input-box">
+              <label>Email</label>
+              <input type="email" value="<%= user ? user.email : '' %>" placeholder="Your Email" readonly style="background: #e9e9e9; cursor: not-allowed;" />
+            </div>
+            <div class="input-box">
+              <label>Address</label>
+              <input type="text" name="address" value="<%= user && user.address ? user.address : '' %>" placeholder="Address" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="input-box" style="flex: 0.5;">
+              <label>Province</label>
+              <select name="province" style="background: #f5f5f5; border: none; border-radius: 4px; padding: 13px 16px; font-size: 16px; outline: none; width: 100%;">
+                <option value="">Choose a province</option>
+                <option value="Bangkok" <%= user && user.province === 'Bangkok' ? 'selected' : '' %>>Bangkok</option>
+                <option value="Amnat Charoen" <%= user && user.province === 'Amnat Charoen' ? 'selected' : '' %>>Amnat Charoen</option>
+                <option value="Ang Thong" <%= user && user.province === 'Ang Thong' ? 'selected' : '' %>>Ang Thong</option>
+                <option value="Bueng Kan" <%= user && user.province === 'Bueng Kan' ? 'selected' : '' %>>Bueng Kan</option>
+                <option value="Buriram" <%= user && user.province === 'Buriram' ? 'selected' : '' %>>Buriram</option>
+                <option value="Chachoengsao" <%= user && user.province === 'Chachoengsao' ? 'selected' : '' %>>Chachoengsao</option>
+                <option value="Chai Nat" <%= user && user.province === 'Chai Nat' ? 'selected' : '' %>>Chai Nat</option>
+                <option value="Chaiyaphum" <%= user && user.province === 'Chaiyaphum' ? 'selected' : '' %>>Chaiyaphum</option>
+                <option value="Chanthaburi" <%= user && user.province === 'Chanthaburi' ? 'selected' : '' %>>Chanthaburi</option>
+                <option value="Chiang Mai" <%= user && user.province === 'Chiang Mai' ? 'selected' : '' %>>Chiang Mai</option>
+                <option value="Chiang Rai" <%= user && user.province === 'Chiang Rai' ? 'selected' : '' %>>Chiang Rai</option>
+                <option value="Chonburi" <%= user && user.province === 'Chonburi' ? 'selected' : '' %>>Chonburi</option>
+                <option value="Chumphon" <%= user && user.province === 'Chumphon' ? 'selected' : '' %>>Chumphon</option>
+                <option value="Kalasin" <%= user && user.province === 'Kalasin' ? 'selected' : '' %>>Kalasin</option>
+                <option value="Kamphaeng Phet" <%= user && user.province === 'Kamphaeng Phet' ? 'selected' : '' %>>Kamphaeng Phet</option>
+                <option value="Kanchanaburi" <%= user && user.province === 'Kanchanaburi' ? 'selected' : '' %>>Kanchanaburi</option>
+                <option value="Khon Kaen" <%= user && user.province === 'Khon Kaen' ? 'selected' : '' %>>Khon Kaen</option>
+                <option value="Krabi" <%= user && user.province === 'Krabi' ? 'selected' : '' %>>Krabi</option>
+                <option value="Lampang" <%= user && user.province === 'Lampang' ? 'selected' : '' %>>Lampang</option>
+                <option value="Lamphun" <%= user && user.province === 'Lamphun' ? 'selected' : '' %>>Lamphun</option>
+                <option value="Loei" <%= user && user.province === 'Loei' ? 'selected' : '' %>>Loei</option>
+                <option value="Lopburi" <%= user && user.province === 'Lopburi' ? 'selected' : '' %>>Lopburi</option>
+                <option value="Mae Hong Son" <%= user && user.province === 'Mae Hong Son' ? 'selected' : '' %>>Mae Hong Son</option>
+                <option value="Maha Sarakham" <%= user && user.province === 'Maha Sarakham' ? 'selected' : '' %>>Maha Sarakham</option>
+                <option value="Mukdahan" <%= user && user.province === 'Mukdahan' ? 'selected' : '' %>>Mukdahan</option>
+                <option value="Nakhon Nayok" <%= user && user.province === 'Nakhon Nayok' ? 'selected' : '' %>>Nakhon Nayok</option>
+                <option value="Nakhon Pathom" <%= user && user.province === 'Nakhon Pathom' ? 'selected' : '' %>>Nakhon Pathom</option>
+                <option value="Nakhon Phanom" <%= user && user.province === 'Nakhon Phanom' ? 'selected' : '' %>>Nakhon Phanom</option>
+                <option value="Nakhon Ratchasima" <%= user && user.province === 'Nakhon Ratchasima' ? 'selected' : '' %>>Nakhon Ratchasima</option>
+                <option value="Nakhon Sawan" <%= user && user.province === 'Nakhon Sawan' ? 'selected' : '' %>>Nakhon Sawan</option>
+                <option value="Nakhon Si Thammarat" <%= user && user.province === 'Nakhon Si Thammarat' ? 'selected' : '' %>>Nakhon Si Thammarat</option>
+                <option value="Nan" <%= user && user.province === 'Nan' ? 'selected' : '' %>>Nan</option>
+                <option value="Narathiwat" <%= user && user.province === 'Narathiwat' ? 'selected' : '' %>>Narathiwat</option>
+                <option value="Nong Bua Lamphu" <%= user && user.province === 'Nong Bua Lamphu' ? 'selected' : '' %>>Nong Bua Lamphu</option>
+                <option value="Nong Khai" <%= user && user.province === 'Nong Khai' ? 'selected' : '' %>>Nong Khai</option>
+                <option value="Nonthaburi" <%= user && user.province === 'Nonthaburi' ? 'selected' : '' %>>Nonthaburi</option>
+                <option value="Pathum Thani" <%= user && user.province === 'Pathum Thani' ? 'selected' : '' %>>Pathum Thani</option>
+                <option value="Pattani" <%= user && user.province === 'Pattani' ? 'selected' : '' %>>Pattani</option>
+                <option value="Phang Nga" <%= user && user.province === 'Phang Nga' ? 'selected' : '' %>>Phang Nga</option>
+                <option value="Phatthalung" <%= user && user.province === 'Phatthalung' ? 'selected' : '' %>>Phatthalung</option>
+                <option value="Phayao" <%= user && user.province === 'Phayao' ? 'selected' : '' %>>Phayao</option>
+                <option value="Phetchabun" <%= user && user.province === 'Phetchabun' ? 'selected' : '' %>>Phetchabun</option>
+                <option value="Phetchaburi" <%= user && user.province === 'Phetchaburi' ? 'selected' : '' %>>Phetchaburi</option>
+                <option value="Phichit" <%= user && user.province === 'Phichit' ? 'selected' : '' %>>Phichit</option>
+                <option value="Phitsanulok" <%= user && user.province === 'Phitsanulok' ? 'selected' : '' %>>Phitsanulok</option>
+                <option value="Phra Nakhon Si Ayutthaya" <%= user && user.province === 'Phra Nakhon Si Ayutthaya' ? 'selected' : '' %>>Phra Nakhon Si Ayutthaya</option>
+                <option value="Phrae" <%= user && user.province === 'Phrae' ? 'selected' : '' %>>Phrae</option>
+                <option value="Phuket" <%= user && user.province === 'Phuket' ? 'selected' : '' %>>Phuket</option>
+                <option value="Prachinburi" <%= user && user.province === 'Prachinburi' ? 'selected' : '' %>>Prachinburi</option>
+                <option value="Prachuap Khiri Khan" <%= user && user.province === 'Prachuap Khiri Khan' ? 'selected' : '' %>>Prachuap Khiri Khan</option>
+                <option value="Ranong" <%= user && user.province === 'Ranong' ? 'selected' : '' %>>Ranong</option>
+                <option value="Ratchaburi" <%= user && user.province === 'Ratchaburi' ? 'selected' : '' %>>Ratchaburi</option>
+                <option value="Rayong" <%= user && user.province === 'Rayong' ? 'selected' : '' %>>Rayong</option>
+                <option value="Roi Et" <%= user && user.province === 'Roi Et' ? 'selected' : '' %>>Roi Et</option>
+                <option value="Sa Kaeo" <%= user && user.province === 'Sa Kaeo' ? 'selected' : '' %>>Sa Kaeo</option>
+                <option value="Sakon Nakhon" <%= user && user.province === 'Sakon Nakhon' ? 'selected' : '' %>>Sakon Nakhon</option>
+                <option value="Samut Prakan" <%= user && user.province === 'Samut Prakan' ? 'selected' : '' %>>Samut Prakan</option>
+                <option value="Samut Sakhon" <%= user && user.province === 'Samut Sakhon' ? 'selected' : '' %>>Samut Sakhon</option>
+                <option value="Samut Songkhram" <%= user && user.province === 'Samut Songkhram' ? 'selected' : '' %>>Samut Songkhram</option>
+                <option value="Saraburi" <%= user && user.province === 'Saraburi' ? 'selected' : '' %>>Saraburi</option>
+                <option value="Satun" <%= user && user.province === 'Satun' ? 'selected' : '' %>>Satun</option>
+                <option value="Sing Buri" <%= user && user.province === 'Sing Buri' ? 'selected' : '' %>>Sing Buri</option>
+                <option value="Sisaket" <%= user && user.province === 'Sisaket' ? 'selected' : '' %>>Sisaket</option>
+                <option value="Songkhla" <%= user && user.province === 'Songkhla' ? 'selected' : '' %>>Songkhla</option>
+                <option value="Sukhothai" <%= user && user.province === 'Sukhothai' ? 'selected' : '' %>>Sukhothai</option>
+                <option value="Suphan Buri" <%= user && user.province === 'Suphan Buri' ? 'selected' : '' %>>Suphan Buri</option>
+                <option value="Surat Thani" <%= user && user.province === 'Surat Thani' ? 'selected' : '' %>>Surat Thani</option>
+                <option value="Surin" <%= user && user.province === 'Surin' ? 'selected' : '' %>>Surin</option>
+                <option value="Tak" <%= user && user.province === 'Tak' ? 'selected' : '' %>>Tak</option>
+                <option value="Trang" <%= user && user.province === 'Trang' ? 'selected' : '' %>>Trang</option>
+                <option value="Trat" <%= user && user.province === 'Trat' ? 'selected' : '' %>>Trat</option>
+                <option value="Ubon Ratchathani" <%= user && user.province === 'Ubon Ratchathani' ? 'selected' : '' %>>Ubon Ratchathani</option>
+                <option value="Udon Thani" <%= user && user.province === 'Udon Thani' ? 'selected' : '' %>>Udon Thani</option>
+                <option value="Uthai Thani" <%= user && user.province === 'Uthai Thani' ? 'selected' : '' %>>Uthai Thani</option>
+                <option value="Uttaradit" <%= user && user.province === 'Uttaradit' ? 'selected' : '' %>>Uttaradit</option>
+                <option value="Yala" <%= user && user.province === 'Yala' ? 'selected' : '' %>>Yala</option>
+                <option value="Yasothon" <%= user && user.province === 'Yasothon' ? 'selected' : '' %>>Yasothon</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-actions" style="margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px;">
+            <a href="/auth/logout" class="btn-logout" style="color: #db4444; border: 1px solid #db4444; text-decoration: none; padding: 10px 20px; border-radius: 4px;">Logout</a>
+            <button type="submit" class="btn-save" style="background: #db4444; color: #fff; border: none; padding: 12px 30px; border-radius: 4px; font-weight: 500; cursor: pointer;">Save Profile</button>
+          </div>
+        </form>
+
+        <!-- My Products Management -->
+        <div id="my-listings" class="my-products-manage" style="margin-top: 60px; transition: all 0.3s ease; border-top: 1px solid #eee; padding-top: 40px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+            <h2 style="font-size: 20px; font-weight: 600; color: #333;">My Listings</h2>
+          </div>
+
+          <% if (products && products.length > 0) { %>
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+              <% products.forEach(item => { %>
+                <div style="display: flex; align-items: center; justify-content: space-between; padding: 15px; background: #fafafa; border: 1px solid #eee; border-radius: 8px;">
+                  <div style="display: flex; align-items: center; gap: 15px;">
+                    <div style="width: 70px; height: 70px; background: #fff; border-radius: 8px; border: 1px solid #eee; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                      <% const mpImg = (item.images && item.images.length > 0) ? item.images[0] : (item.image || 'https://placehold.co/100?text=No+Photo'); %>
+                      <img src="<%= mpImg %>" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    </div>
+                    <div>
+                      <h4 style="margin: 0 0 5px 0; font-size: 15px; color: #333;"><%= item.name %></h4>
+                      <p style="margin: 0; font-size: 14px; font-weight: 700; color: #db4444;">฿<%= item.price.toLocaleString() %></p>
+                      <span style="font-size: 11px; background: #eee; padding: 2px 7px; border-radius: 10px; color: #777; text-transform: uppercase;"><%= item.category ? item.category.name : 'Unknown' %></span>
+                    </div>
+                  </div>
+
+                  <div style="display: flex; align-items: center; gap: 15px;">
+                    <div style="text-align: right;">
+                      <span style="display: block; font-size: 10px; color: #999; margin-bottom: 3px;">Status</span>
+                      <% if (item.status === 'Sold') { %>
+                        <span style="color: #999; font-weight: 700; font-size: 12px;">SOLD OUT</span>
+                      <% } else { %>
+                        <span style="color: #2e7d32; font-weight: 700; font-size: 12px;">AVAILABLE</span>
+                      <% } %>
+                    </div>
+
+                    <div style="display: flex; gap: 8px;">
+                      <% if (item.status !== 'Sold') { %>
+                        <form action="/items/status/<%= item._id %>" method="POST">
+                          <input type="hidden" name="status" value="Sold">
+                          <button type="submit" style="background: white; border: 1px solid #ccc; padding: 6px 12px; border-radius: 4px; font-size: 12px; cursor: pointer;">Done Sale</button>
+                        </form>
+                      <% } else { %>
+                        <form action="/items/status/<%= item._id %>" method="POST">
+                          <input type="hidden" name="status" value="Available">
+                          <button type="submit" style="background: white; border: 1px solid #ccc; padding: 6px 12px; border-radius: 4px; font-size: 12px; cursor: pointer;">Re-list</button>
+                        </form>
+                      <% } %>
+                      <form action="/items/<%= item._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Delete this product permanently?')">
+                        <button type="submit" style="background: #db4444; color: white; border: none; padding: 6px 12px; border-radius: 4px; font-size: 12px; cursor: pointer;">Delete</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              <% }) %>
+            </div>
+          <% } else { %>
+            <div style="text-align: center; padding: 30px; border: 1px dashed #ccc; border-radius: 10px;">
+              <p style="color: #999; font-size: 14px;">No products listed yet.</p>
+              <a href="/items/add" style="color: #db4444; font-size: 14px; font-weight: 600;">Post your first item now!</a>
+            </div>
+          <% } %>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <%- include('partials/footer') %>
+</body>
+
+</html>
